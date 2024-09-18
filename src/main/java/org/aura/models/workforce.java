@@ -1,11 +1,11 @@
 package org.aura.models;
 
-public class mainDœuvre extends Composants {
+public class workforce extends Composants {
     private double tauxHoraire;
     private double heuresTravail;
     private double productiviteOuvrier;
 
-    public mainDœuvre(int id, String nom, String typeComposant, double tauxTVA, double tauxHoraire, double heuresTravail, double productiviteOuvrier) {
+    public workforce(int id, String nom, String typeComposant, double tauxTVA, double tauxHoraire, double heuresTravail, double productiviteOuvrier) {
         super(id, nom, typeComposant, tauxTVA);
         this.tauxHoraire = tauxHoraire;
         this.heuresTravail = heuresTravail;

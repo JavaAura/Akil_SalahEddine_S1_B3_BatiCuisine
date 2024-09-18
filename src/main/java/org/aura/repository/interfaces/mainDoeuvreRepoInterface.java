@@ -1,5 +1,8 @@
 package org.aura.repository.interfaces;
 
-public interface mainDoeuvreRepoInterface {
+import org.aura.models.workforce;
 
+public interface mainDoeuvreRepoInterface {
+    workforce findWorkForceById(int id) ;
+    void addWorkForce (workforce mainDoeuvre);
 }
