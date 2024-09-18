@@ -1,5 +1,5 @@
 package org.aura.models;
 
-public enum etat {
+public enum Etat {
     Encours,Terminé,Annulé
 }

@@ -5,9 +5,9 @@ public class Projet {
     private String nomProjet;
     private double margeBeneficiaire;
     private double coutTotal;
-    private etat etatProjet;
+    private Etat etatProjet;
 
-    public Projet(int id, String nomProjet, double margeBeneficiaire, double coutTotal, etat etatProjet) {
+    public Projet(int id, String nomProjet, double margeBeneficiaire, double coutTotal, Etat etatProjet) {
         this.id = id;
         this.nomProjet = nomProjet;
         this.margeBeneficiaire = margeBeneficiaire;
@@ -47,11 +47,11 @@ public class Projet {
         this.coutTotal = coutTotal;
     }
 
-    public etat getEtatProjet() {
+    public Etat getEtatProjet() {
         return etatProjet;
     }
 
-    public void setEtatProjet(etat etatProjet) {
+    public void setEtatProjet(Etat etatProjet) {
         this.etatProjet = etatProjet;
     }
 }
