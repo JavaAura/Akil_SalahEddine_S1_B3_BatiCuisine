@@ -57,7 +57,6 @@ public class Materiel extends Composants {
                 ", quantite=" + quantite +
                 ", coutTransport=" + coutTransport +
                 ", coefficientQualite=" + coefficientQualite +
-
                 '}';
     }
 }

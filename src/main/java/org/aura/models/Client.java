@@ -14,6 +14,12 @@ public class Client {
         this.telephone = telephone;
         this.estProfessionnel = estProfessionnel;
     }
+    public Client( String nom, String adresse, String telephone, Boolean estProfessionnel) {
+        this.nom = nom;
+        this.adresse = adresse;
+        this.telephone = telephone;
+        this.estProfessionnel = estProfessionnel;
+    }
 
     public int getId() {
         return id;
