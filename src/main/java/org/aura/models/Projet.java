@@ -3,13 +3,15 @@ package org.aura.models;
 public class Projet {
     private int id;
     private String nomProjet;
+    private double surface;
     private double margeBeneficiaire;
     private double coutTotal;
     private Etat etatProjet;
 
-    public Projet(int id, String nomProjet, double margeBeneficiaire, double coutTotal, Etat etatProjet) {
+    public Projet(int id,double surface, String nomProjet, double margeBeneficiaire, double coutTotal, Etat etatProjet) {
         this.id = id;
         this.nomProjet = nomProjet;
+        this.surface=surface;
         this.margeBeneficiaire = margeBeneficiaire;
         this.coutTotal = coutTotal;
         this.etatProjet = etatProjet;
@@ -53,5 +55,13 @@ public class Projet {
 
     public void setEtatProjet(Etat etatProjet) {
         this.etatProjet = etatProjet;
+    }
+
+    public double getSurface() {
+        return surface;
+    }
+
+    public void setSurface(double surface) {
+        this.surface = surface;
     }
 }

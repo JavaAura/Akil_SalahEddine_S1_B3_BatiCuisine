@@ -34,6 +34,7 @@ public class projectRepoImpl implements projectRepoInterface {
                    etat1 =  Etat.valueOf(valeur);
                 }
                 Projet projet = new Projet(rs.getInt("id"),
+                        rs.getDouble("surface"),
                         rs.getString("nomProjet"),
                         rs.getDouble("margeBeneficiaire"),
                         rs.getDouble("coutTotal"),
@@ -60,10 +61,12 @@ public class projectRepoImpl implements projectRepoInterface {
                     etat = Etat.valueOf(valeur);
                 }
                 return new Projet(rs.getInt("id"),
+                        rs.getDouble("surface"),
                         rs.getString("nomProjet"),
                         rs.getDouble("margeBeneficiaire"),
                         rs.getDouble("coutTotal"),
-                        etat);
+                        etat
+                                        );
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -73,13 +76,14 @@ public class projectRepoImpl implements projectRepoInterface {
 
     @Override
     public void addProject(Projet projet) {
-        String query = "INSERT INTO projet (nomProjet,margeBeneficiaire,coutTotal,etatProjet) VALUES (?,?,?,?) ";
+        String query = "INSERT INTO projet (nomProjet,margeBeneficiaire,coutTotal,etatProjet,surface) VALUES (?,?,?,?,?) ";
         try(Connection con = getConnection();
             PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1,projet.getNomProjet());
             stmt.setDouble(2,projet.getMargeBeneficiaire());
             stmt.setDouble(3,projet.getCoutTotal());
             stmt.setObject(4,projet.getEtatProjet(),java.sql.Types.OTHER);
+            stmt.setDouble(5,projet.getSurface());
             stmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();

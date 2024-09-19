@@ -8,7 +8,4 @@ public interface projectRepoInterface {
     List<Projet> findAllProjects();
     Projet findProjectById (int id);
     void addProject(Projet projet);
-
-
-
 }
