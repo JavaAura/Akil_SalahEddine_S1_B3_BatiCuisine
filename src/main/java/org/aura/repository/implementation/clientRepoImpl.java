@@ -62,6 +62,26 @@ public class clientRepoImpl implements clientRepoInterface {
     }
 
     @Override
+    public Client findClientByName(String name) {
+        String query = " SELECT * FROM client WHERE nom = ? ";
+        try (Connection con = getConnection();
+             PreparedStatement stmt = con.prepareStatement(query)){
+            stmt.setString(1,name);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()){
+                return new Client(rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("adresse"),
+                        rs.getString("telephone"),
+                        rs.getBoolean("estprofessionnel"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public void addClient(Client client) {
         String query = "INSERT INTO client (nom,adresse,telephone,estprofessionnel) VALUES (?,?,?,?) ";
         try(Connection con = getConnection();
