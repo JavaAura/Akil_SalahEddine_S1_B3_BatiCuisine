@@ -14,7 +14,7 @@ import java.util.List;
 
 public class projectRepoImpl implements projectRepoInterface {
 
-    private projectRepoImpl(){}
+    public projectRepoImpl(){}
 
     private static Connection getConnection(){
         return jdbcConnection.getConnection();

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class clientRepoImpl implements clientRepoInterface {
 
-    private clientRepoImpl() {
+    public clientRepoImpl() {
     }
 
     private static Connection getConnection(){

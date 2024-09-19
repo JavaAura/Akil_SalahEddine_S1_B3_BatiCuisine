@@ -8,14 +8,15 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.aura.utils.LoggerUtils.logInfo;
+import static org.aura.utils.LoggerUtils.logWarn;
 
 
 public class clientImplService implements clientInterfaceServ {
 
-    private clientRepoImpl clientRepo;
+    private final clientRepoImpl clientRepo;
 
-    public clientImplService(clientRepoImpl clientRepo) {
-        this.clientRepo = clientRepo;
+    public clientImplService() {
+        this.clientRepo = new clientRepoImpl();
     }
 
     @Override
@@ -43,6 +44,10 @@ public class clientImplService implements clientInterfaceServ {
 
     @Override
     public void createClient(Client client) {
-        clientRepo.addClient(client);
+        if (client!=null){
+            clientRepo.addClient(client);
+        }else {
+            logWarn("Client not created");
+        }
     }
 }

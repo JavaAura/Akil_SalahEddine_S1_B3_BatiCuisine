@@ -1,6 +1,7 @@
 package org.aura.services.implementation;
 
 import org.aura.models.Projet;
+import org.aura.repository.implementation.projectRepoImpl;
 import org.aura.repository.interfaces.projectRepoInterface;
 import org.aura.services.interfaces.projetInterfaceServ;
 
@@ -8,10 +9,10 @@ import java.util.List;
 
 public class projetImplService implements projetInterfaceServ {
 
-    private projectRepoInterface projectRepoInterface;
+    private final projectRepoImpl projectRepoImpl;
 
-    public projetImplService(projectRepoInterface projectRepoInterface) {
-        this.projectRepoInterface = projectRepoInterface;
+    public projetImplService() {
+        this.projectRepoImpl = new projectRepoImpl();
     }
 
     @Override
@@ -26,6 +27,6 @@ public class projetImplService implements projetInterfaceServ {
 
     @Override
     public void createProject(Projet projet) {
-    projectRepoInterface.addProject(projet);
+        projectRepoImpl.addProject(projet);
     }
 }
