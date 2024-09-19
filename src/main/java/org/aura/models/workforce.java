@@ -35,4 +35,17 @@ public class workforce extends Composants {
     public void setProductiviteOuvrier(double productiviteOuvrier) {
         this.productiviteOuvrier = productiviteOuvrier;
     }
+
+    @Override
+    public String toString() {
+        return "workforce{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", typeComposant='" + typeComposant + '\'' +
+                ", tauxTVA=" + tauxTVA +
+                ", tauxHoraire=" + tauxHoraire +
+                ", heuresTravail=" + heuresTravail +
+                ", productiviteOuvrier=" + productiviteOuvrier +
+                '}';
+    }
 }

@@ -64,4 +64,16 @@ public class Projet {
     public void setSurface(double surface) {
         this.surface = surface;
     }
+
+    @Override
+    public String toString() {
+        return "Projet{" +
+                "id=" + id +
+                ", nomProjet='" + nomProjet + '\'' +
+                ", surface=" + surface +
+                ", margeBeneficiaire=" + margeBeneficiaire +
+                ", coutTotal=" + coutTotal +
+                ", etatProjet=" + etatProjet +
+                '}';
+    }
 }

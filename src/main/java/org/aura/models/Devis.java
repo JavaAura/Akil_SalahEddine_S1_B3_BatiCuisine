@@ -56,4 +56,15 @@ public class Devis {
     public void setAccepte(Boolean accepte) {
         this.accepte = accepte;
     }
+
+    @Override
+    public String toString() {
+        return "Devis{" +
+                "id=" + id +
+                ", montantEstime=" + montantEstime +
+                ", dateEmission=" + dateEmission +
+                ", dateValidite=" + dateValidite +
+                ", accepte=" + accepte +
+                '}';
+    }
 }

@@ -45,4 +45,19 @@ public class Materiel extends Composants {
     public void setCoefficientQualite(double coefficientQualite) {
         this.coefficientQualite = coefficientQualite;
     }
+
+    @Override
+    public String toString() {
+        return "Materiel{" +
+                " id=" + id +
+                ", nom='" + nom + '\'' +
+                ", typeComposant='" + typeComposant + '\'' +
+                ", tauxTVA=" + tauxTVA +
+                ", coutUnitaire=" + coutUnitaire +
+                ", quantite=" + quantite +
+                ", coutTransport=" + coutTransport +
+                ", coefficientQualite=" + coefficientQualite +
+
+                '}';
+    }
 }

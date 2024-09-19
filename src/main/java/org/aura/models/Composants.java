@@ -44,4 +44,14 @@ public abstract class Composants {
     public void setTauxTVA(double tauxTVA) {
         this.tauxTVA = tauxTVA;
     }
+
+    @Override
+    public String toString() {
+        return "Composants{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", typeComposant='" + typeComposant + '\'' +
+                ", tauxTVA=" + tauxTVA +
+                '}';
+    }
 }

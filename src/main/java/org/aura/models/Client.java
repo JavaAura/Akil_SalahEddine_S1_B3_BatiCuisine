@@ -54,4 +54,15 @@ public class Client {
     public void setEstProfessionnel(Boolean estProfessionnel) {
         this.estProfessionnel = estProfessionnel;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", adresse='" + adresse + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", estProfessionnel=" + estProfessionnel +
+                '}';
+    }
 }
