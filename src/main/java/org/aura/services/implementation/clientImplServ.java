@@ -11,11 +11,11 @@ import static org.aura.utils.LoggerUtils.logInfo;
 import static org.aura.utils.LoggerUtils.logWarn;
 
 
-public class clientImplService implements clientInterfaceServ {
+public class clientImplServ implements clientInterfaceServ {
 
     private final clientRepoImpl clientRepo;
 
-    public clientImplService() {
+    public clientImplServ() {
         this.clientRepo = new clientRepoImpl();
     }
 

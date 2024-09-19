@@ -1,16 +1,16 @@
 package org.aura.view;
 
-import org.aura.services.implementation.projetImplService;
+import org.aura.services.implementation.projetImplServ;
 import static org.aura.utils.LoggerUtils.logInfo;
 
 import java.util.Scanner;
 
 public class projectConsoleUi {
 
-    private final projetImplService projetService;
+    private final projetImplServ projetService;
     clientConsoleUi clientConsoleUi = new clientConsoleUi();
     public projectConsoleUi() {
-        this.projetService = new projetImplService( );
+        this.projetService = new projetImplServ( );
     }
 
     public void creeProjet(Scanner scanner){

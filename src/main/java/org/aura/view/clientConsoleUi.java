@@ -1,7 +1,7 @@
 package org.aura.view;
 
 import org.aura.models.Client;
-import org.aura.services.implementation.clientImplService;
+import org.aura.services.implementation.clientImplServ;
 import static org.aura.utils.LoggerUtils.logInfo;
 import static org.aura.utils.LoggerUtils.logWarn;
 
@@ -9,10 +9,10 @@ import java.util.Scanner;
 
 public class clientConsoleUi {
 
-    private final clientImplService clientImplService;
+    private final clientImplServ clientImplService;
 
     public clientConsoleUi() {
-        this.clientImplService = new clientImplService();
+        this.clientImplService = new clientImplServ();
     }
     public void rechercheClientExist(Scanner scanner){
         logInfo("--- Recherche de client existant --- ");
