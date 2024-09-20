@@ -1,6 +1,6 @@
 package org.aura.repository.implementation;
 
-import org.aura.config.jdbcConnection;
+import org.aura.config.DbConnection;
 import org.aura.models.Materiel;
 import org.aura.repository.interfaces.materielRepoInterface;
 
@@ -14,7 +14,7 @@ public class materielRepoImpl implements materielRepoInterface {
     public materielRepoImpl() {}
 
     private static Connection getConnection(){
-        return jdbcConnection.getConnection();
+        return DbConnection.getInstance().getConnection();
     }
 
     @Override

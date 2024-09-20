@@ -1,6 +1,6 @@
 package org.aura.repository.implementation;
 
-import org.aura.config.jdbcConnection;
+import org.aura.config.DbConnection;
 import org.aura.repository.interfaces.clientRepoInterface;
 import org.aura.models.Client;
 
@@ -17,7 +17,7 @@ public class clientRepoImpl implements clientRepoInterface {
     }
 
     private static Connection getConnection(){
-        return jdbcConnection.getConnection();
+        return DbConnection.getInstance().getConnection();
     }
 
     @Override

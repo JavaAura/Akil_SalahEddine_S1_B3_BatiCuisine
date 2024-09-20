@@ -1,7 +1,6 @@
 package org.aura.repository.implementation;
 
-import org.aura.config.jdbcConnection;
-import org.aura.models.Materiel;
+import org.aura.config.DbConnection;
 import org.aura.models.workforce;
 import org.aura.repository.interfaces.mainDoeuvreRepoInterface;
 
@@ -15,7 +14,7 @@ public class mainDoeuvreRepoImpl implements mainDoeuvreRepoInterface {
     public mainDoeuvreRepoImpl() {}
 
     private static Connection getConnection(){
-        return jdbcConnection.getConnection();
+        return DbConnection.getInstance().getConnection();
     }
 
     @Override

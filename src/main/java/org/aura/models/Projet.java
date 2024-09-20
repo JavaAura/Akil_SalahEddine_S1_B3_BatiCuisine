@@ -1,6 +1,7 @@
 package org.aura.models;
 
 public class Projet {
+
     private int id;
     private String nomProjet;
     private double surface;

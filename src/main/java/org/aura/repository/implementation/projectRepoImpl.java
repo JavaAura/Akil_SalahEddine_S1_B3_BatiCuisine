@@ -1,6 +1,6 @@
 package org.aura.repository.implementation;
 
-import org.aura.config.jdbcConnection;
+import org.aura.config.DbConnection;
 import org.aura.models.Etat;
 import org.aura.models.Projet;
 import org.aura.repository.interfaces.projectRepoInterface;
@@ -17,7 +17,7 @@ public class projectRepoImpl implements projectRepoInterface {
     public projectRepoImpl(){}
 
     private static Connection getConnection(){
-        return jdbcConnection.getConnection();
+        return DbConnection.getInstance().getConnection();
     }
 
     @Override

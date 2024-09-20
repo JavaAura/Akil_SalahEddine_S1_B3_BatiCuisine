@@ -1,6 +1,6 @@
 package org.aura.repository.implementation;
 
-import org.aura.config.jdbcConnection;
+import org.aura.config.DbConnection;
 import org.aura.models.Devis;
 import org.aura.repository.interfaces.devisRepoInterface;
 
@@ -15,7 +15,7 @@ public class devisRepoImpl implements devisRepoInterface {
     }
 
     private static Connection getConnection(){
-        return jdbcConnection.getConnection();
+        return DbConnection.getInstance().getConnection();
     }
 
     @Override
