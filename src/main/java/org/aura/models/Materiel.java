@@ -6,8 +6,8 @@ public class Materiel extends Composants {
     private  double coutTransport;
     private  double coefficientQualite;
 
-    public Materiel( String nom, String typeComposant, double tauxTVA, double coutUnitaire, double quantite, double coutTransport, double coefficientQualite) {
-        super( nom, typeComposant, tauxTVA);
+    public Materiel( String nom, double tauxTVA, double coutUnitaire, double quantite, double coutTransport, double coefficientQualite) {
+        super( nom, tauxTVA);
         this.coutUnitaire = coutUnitaire;
         this.quantite = quantite;
         this.coutTransport = coutTransport;
@@ -51,7 +51,6 @@ public class Materiel extends Composants {
         return "Materiel{" +
                 " id=" + id +
                 ", nom='" + nom + '\'' +
-                ", typeComposant='" + typeComposant + '\'' +
                 ", tauxTVA=" + tauxTVA +
                 ", coutUnitaire=" + coutUnitaire +
                 ", quantite=" + quantite +

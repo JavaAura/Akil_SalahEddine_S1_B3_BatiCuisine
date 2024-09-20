@@ -1,7 +1,7 @@
 package org.aura.repository.implementation;
 
 import org.aura.config.DbConnection;
-import org.aura.models.Etat;
+import org.aura.models.enums.Etat;
 import org.aura.models.Projet;
 import org.aura.repository.interfaces.projectRepoInterface;
 

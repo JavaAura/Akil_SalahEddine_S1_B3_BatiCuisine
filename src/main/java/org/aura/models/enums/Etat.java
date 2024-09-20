@@ -1,4 +1,4 @@
-package org.aura.models;
+package org.aura.models.enums;
 
 public enum Etat {
     Encours,Terminé,Annulé

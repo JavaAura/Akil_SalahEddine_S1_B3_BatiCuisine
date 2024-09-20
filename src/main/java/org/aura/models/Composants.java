@@ -3,12 +3,10 @@ package org.aura.models;
 public abstract class Composants {
     protected int id;
     protected String nom;
-    protected String typeComposant;
     protected double tauxTVA;
 
-    public Composants(String nom, String typeComposant, double tauxTVA) {
+    public Composants(String nom, double tauxTVA) {
         this.nom = nom;
-        this.typeComposant = typeComposant;
         this.tauxTVA = tauxTVA;
     }
 
@@ -28,14 +26,6 @@ public abstract class Composants {
         this.nom = nom;
     }
 
-    public String getTypeComposant() {
-        return typeComposant;
-    }
-
-    public void setTypeComposant(String typeComposant) {
-        this.typeComposant = typeComposant;
-    }
-
     public double getTauxTVA() {
         return tauxTVA;
     }
@@ -49,7 +39,6 @@ public abstract class Composants {
         return "Composants{" +
                 "id=" + id +
                 ", nom='" + nom + '\'' +
-                ", typeComposant='" + typeComposant + '\'' +
                 ", tauxTVA=" + tauxTVA +
                 '}';
     }

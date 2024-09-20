@@ -1,5 +1,7 @@
 package org.aura.models;
 
+import org.aura.models.enums.Etat;
+
 public class Projet {
 
     private int id;

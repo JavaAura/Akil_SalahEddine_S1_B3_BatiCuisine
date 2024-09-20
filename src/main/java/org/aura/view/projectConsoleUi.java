@@ -8,12 +8,18 @@ import java.util.Scanner;
 public class projectConsoleUi {
 
     private final projetImplServ projetService;
-    clientConsoleUi clientConsoleUi = new clientConsoleUi();
+    clientConsoleUi clientConsoleUi ;
+    materialConsoleUi materialConsoleUi;
+    workForceConsoleUi workForceConsoleUi;
     public projectConsoleUi() {
-        this.projetService = new projetImplServ( );
+        this.projetService = new projetImplServ();
+        this.clientConsoleUi = new clientConsoleUi();
+        this.materialConsoleUi = new materialConsoleUi();
+        this.workForceConsoleUi = new workForceConsoleUi();
     }
 
     public void creeProjet(Scanner scanner){
+
         logInfo("--- Recherche de client ---");
         logInfo("1. Chercher un client existant");
         logInfo("2. Ajouter un nouveau client");
@@ -32,7 +38,8 @@ public class projectConsoleUi {
         logInfo("Entrez le nom du projet : ");
         String projectNom = scanner.nextLine();
         logInfo("Entrez la surface de la cuisine (en m²) : ");
-
-
+        double surface = scanner.nextDouble();
+        materialConsoleUi.ajouterMateriel(scanner);
+        workForceConsoleUi.ajouterMainOeuvre(scanner);
     }
 }

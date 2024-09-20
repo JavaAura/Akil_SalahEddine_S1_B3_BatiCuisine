@@ -1,5 +1,7 @@
 package org.aura.view;
 
+import org.aura.models.enums.mainDoeuvreType;
+import org.aura.models.workforce;
 import org.aura.services.implementation.workForceImplServ;
 import org.aura.utils.LoggerUtils;
 
@@ -19,22 +21,34 @@ public workForceConsoleUi(){
         do {
             scanner.nextLine();
             LoggerUtils.logInfo("Entrez le nom du main-d'œuvre : ");
-            String materialNom = scanner.nextLine();
-            LoggerUtils.logInfo("Entrez le type composant : ");
-            String typeComposant = scanner.nextLine();
+            String mainNom = scanner.nextLine();
             LoggerUtils.logInfo("Entrez le taux TVA : ");
             double tauxTVA = scanner.nextDouble();
-            System.out.print("Entrez le type de main-d'œuvre : ");
-            String laborType = scanner.nextLine();
-            System.out.print("Entrez le taux horaire (€/h) : ");
+            LoggerUtils.logInfo("Entrez le type de main-d'œuvre : ");
+            LoggerUtils.logInfo("1. Ouvrier");
+            LoggerUtils.logInfo("2. Spécialiste");
+            LoggerUtils.logInfo("Tapez 1 pour le type Ouvrier et 2 pour un Spécialiste ");
+            int choix = scanner.nextInt();
+            mainDoeuvreType laborType = null;
+            if (choix == 1){
+                laborType = mainDoeuvreType.Ouvrier;
+            } else if (choix == 2) {
+                laborType = mainDoeuvreType.Spécialiste;
+            }else {
+                LoggerUtils.logWarn("Choix invalide");
+            }
+            LoggerUtils.logInfo("Entrez le taux horaire : ");
             double tauxHoraire = scanner.nextDouble();
-            System.out.print("Entrez le nombre d'heures : ");
+            LoggerUtils.logInfo("Entrez le nombre d'heures : ");
             int heuresTravail = scanner.nextInt();
-            System.out.print("Entrez le facteur de productivité : ");
+            LoggerUtils.logInfo("Entrez le facteur de productivité : ");
             double productiviteOuvrier = scanner.nextDouble();
+            workforce workforce = new workforce(mainNom,tauxTVA,tauxHoraire,heuresTravail,productiviteOuvrier,laborType);
+            workForceImplServ.createWorkForce(workforce);
             System.out.println("Main-d'œuvre ajoutée avec succès !");
             System.out.print("Voulez-vous ajouter un autre type de main-d'œuvre ? (y/n) : ");
             ajouterAutreMateriel = scanner.next();
+
         }while (ajouterAutreMateriel.equals("y"));
     }
 

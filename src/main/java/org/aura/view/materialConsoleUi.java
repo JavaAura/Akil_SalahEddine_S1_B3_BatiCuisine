@@ -23,8 +23,6 @@ public class materialConsoleUi {
             String materialNom = scanner.nextLine();
             LoggerUtils.logInfo("Entrez la quantité de ce matériau : ");
             double quantite = scanner.nextDouble();
-            LoggerUtils.logInfo("Entrez le type composant : ");
-            String typeComposant = scanner.nextLine();
             LoggerUtils.logInfo("Entrez le taux TVA : ");
             double tauxTVA = scanner.nextDouble();
             LoggerUtils.logInfo("Entrez le coût unitaire de ce matériau : ");
@@ -33,7 +31,7 @@ public class materialConsoleUi {
             double coutTransport = scanner.nextDouble();
             LoggerUtils.logInfo("Entrez le coefficient de qualité : ");
             double coefficientQualite = scanner.nextDouble();
-            Materiel materiel = new Materiel(materialNom,typeComposant,tauxTVA,coutUnitaire,quantite,coutTransport,coefficientQualite);
+            Materiel materiel = new Materiel(materialNom,tauxTVA,coutUnitaire,quantite,coutTransport,coefficientQualite);
             materielImpServ.createMateriel(materiel);
             LoggerUtils.logInfo("Matériau ajouté avec succès !");
             LoggerUtils.logInfo("Voulez-vous ajouter un autre matériau ? (y/n) : ");

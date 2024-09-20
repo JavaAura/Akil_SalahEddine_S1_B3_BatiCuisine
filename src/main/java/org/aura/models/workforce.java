@@ -1,15 +1,19 @@
 package org.aura.models;
 
+import org.aura.models.enums.mainDoeuvreType;
+
 public class workforce extends Composants {
     private double tauxHoraire;
     private double heuresTravail;
     private double productiviteOuvrier;
+    private mainDoeuvreType mainDoeuvreType;
 
-    public workforce( String nom, String typeComposant, double tauxTVA, double tauxHoraire, double heuresTravail, double productiviteOuvrier) {
-        super( nom, typeComposant, tauxTVA);
+    public workforce( String nom ,double tauxTVA, double tauxHoraire, double heuresTravail, double productiviteOuvrier,mainDoeuvreType mainDoeuvreType) {
+        super(nom,tauxTVA);
         this.tauxHoraire = tauxHoraire;
         this.heuresTravail = heuresTravail;
         this.productiviteOuvrier = productiviteOuvrier;
+        this.mainDoeuvreType = mainDoeuvreType;
     }
 
     public double getTauxHoraire() {
@@ -36,16 +40,12 @@ public class workforce extends Composants {
         this.productiviteOuvrier = productiviteOuvrier;
     }
 
-    @Override
-    public String toString() {
-        return "workforce{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", typeComposant='" + typeComposant + '\'' +
-                ", tauxTVA=" + tauxTVA +
-                ", tauxHoraire=" + tauxHoraire +
-                ", heuresTravail=" + heuresTravail +
-                ", productiviteOuvrier=" + productiviteOuvrier +
-                '}';
+    public org.aura.models.enums.mainDoeuvreType getMainDoeuvreType() {
+        return mainDoeuvreType;
     }
-}
+
+    public void setMainDoeuvreType(org.aura.models.enums.mainDoeuvreType mainDoeuvreType) {
+        this.mainDoeuvreType = mainDoeuvreType;
+    }
+
+    }

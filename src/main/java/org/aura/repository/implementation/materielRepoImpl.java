@@ -25,14 +25,15 @@ public class materielRepoImpl implements materielRepoInterface {
             stmt.setInt(1,id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()){
-                return new Materiel(rs.getInt("id"),
+                Materiel materiel = new Materiel(
                         rs.getString("nom"),
-                        rs.getString("typeComposant"),
                         rs.getDouble("tauxTVA"),
                         rs.getDouble("coutUnitaire"),
                         rs.getDouble("quantite"),
                         rs.getDouble("coutTransport"),
                         rs.getDouble("coefficientQualite"));
+                materiel.setId(rs.getInt("id"));
+                return materiel;
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -46,7 +47,6 @@ public class materielRepoImpl implements materielRepoInterface {
         try(Connection con = getConnection();
             PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1,materiel.getNom());
-            stmt.setString(2,materiel.getTypeComposant());
             stmt.setDouble(3,materiel.getTauxTVA());
             stmt.setDouble(4,materiel.getCoutUnitaire());
             stmt.setDouble(5,materiel.getQuantite());
