@@ -1,5 +1,6 @@
 package org.aura.view;
 
+import org.aura.models.Materiel;
 import org.aura.services.implementation.materielImpServ;
 import org.aura.utils.LoggerUtils;
 
@@ -12,22 +13,31 @@ public class materialConsoleUi {
     public materialConsoleUi() {
         this.materielImpServ = new materielImpServ();
     }
+
     public void ajouterMateriel(Scanner scanner){
         LoggerUtils.logInfo("--- Ajout des matériaux ---");
-        String ajouterAutreMateriel ="";
+        String ajouterAutreMateriel ;
         do {
             scanner.nextLine();
-            System.out.print("Entrez le nom du matériau : ");
+            LoggerUtils.logInfo("Entrez le nom du matériau : ");
             String materialNom = scanner.nextLine();
-            System.out.print("Entrez la quantité de ce matériau : ");
-            double quantity = scanner.nextDouble();
-            System.out.print("Entrez le coût unitaire de ce matériau : ");
-            double unitCost = scanner.nextDouble();
-            System.out.print("Entrez le coût de transport : ");
-            double transportCost = scanner.nextDouble();
-            System.out.print("Entrez le coefficient de qualité : ");
-            double qualityCoefficient = scanner.nextDouble();
-            System.out.println("Matériau ajouté avec succès !");
+            LoggerUtils.logInfo("Entrez la quantité de ce matériau : ");
+            double quantite = scanner.nextDouble();
+            LoggerUtils.logInfo("Entrez le type composant : ");
+            String typeComposant = scanner.nextLine();
+            LoggerUtils.logInfo("Entrez le taux TVA : ");
+            double tauxTVA = scanner.nextDouble();
+            LoggerUtils.logInfo("Entrez le coût unitaire de ce matériau : ");
+            double coutUnitaire = scanner.nextDouble();
+            LoggerUtils.logInfo("Entrez le coût de transport : ");
+            double coutTransport = scanner.nextDouble();
+            LoggerUtils.logInfo("Entrez le coefficient de qualité : ");
+            double coefficientQualite = scanner.nextDouble();
+            Materiel materiel = new Materiel(materialNom,typeComposant,tauxTVA,coutUnitaire,quantite,coutTransport,coefficientQualite);
+            materielImpServ.createMateriel(materiel);
+            LoggerUtils.logInfo("Matériau ajouté avec succès !");
+            LoggerUtils.logInfo("Voulez-vous ajouter un autre matériau ? (y/n) : ");
+            ajouterAutreMateriel = scanner.next();
         }while (ajouterAutreMateriel.equals("y"));
     }
 }
