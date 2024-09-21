@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class devisRepoImpl implements devisRepoInterface {
-    private devisRepoImpl() {
+    public devisRepoImpl() {
     }
 
     private static Connection getConnection(){
@@ -28,12 +28,15 @@ public class devisRepoImpl implements devisRepoInterface {
             if (rs.next()){
                 LocalDate dateEmission = rs.getDate("dateEmission").toLocalDate();
                 LocalDate dateValidite = rs.getDate("dateValidite").toLocalDate();
-                return new Devis(rs.getInt("id"),
+                Devis devis = new Devis(
                         rs.getDouble("montantEstime"),
                         dateEmission,
                         dateValidite,
                         rs.getBoolean("accepte"));
+                devis.setId(rs.getInt("id"));
+                return devis;
             }
+
         }catch (SQLException e){
             e.printStackTrace();
         }

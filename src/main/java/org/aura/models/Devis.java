@@ -9,8 +9,7 @@ public class Devis {
     private LocalDate dateValidite;
     private Boolean accepte;
 
-    public Devis(int id, double montantEstime, LocalDate dateEmission, LocalDate dateValidite, Boolean accepte) {
-        this.id = id;
+    public Devis( double montantEstime, LocalDate dateEmission, LocalDate dateValidite, Boolean accepte) {
         this.montantEstime = montantEstime;
         this.dateEmission = dateEmission;
         this.dateValidite = dateValidite;
