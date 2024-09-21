@@ -1,5 +1,6 @@
 package org.aura.services.implementation;
 
+import org.aura.models.Client;
 import org.aura.models.Projet;
 import org.aura.repository.implementation.projectRepoImpl;
 import org.aura.services.interfaces.projetInterfaceServ;
@@ -25,7 +26,7 @@ public class projetImplServ implements projetInterfaceServ {
     }
 
     @Override
-    public void createProject(Projet projet) {
-        projectRepoImpl.addProject(projet);
+    public void createProject(Projet projet, Client client) {
+        projectRepoImpl.addProject(projet,client.getId());
     }
 }

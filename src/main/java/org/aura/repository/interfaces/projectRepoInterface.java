@@ -7,5 +7,5 @@ import java.util.List;
 public interface projectRepoInterface {
     List<Projet> findAllProjects();
     Projet findProjectById (int id);
-    void addProject(Projet projet);
+    void addProject(Projet projet,int clientId);
 }

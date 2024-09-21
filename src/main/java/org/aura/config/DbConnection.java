@@ -13,18 +13,22 @@ public class DbConnection {
 
     Dotenv dotenv = Dotenv.load();
 
-    private DbConnection() {
+    private DbConnection() {}
+    public synchronized Connection getValidConnection() {
         try {
-            String host = dotenv.get("DB_HOST");
-            String port = dotenv.get("DB_PORT");
-            String user = dotenv.get("DB_USER");
-            String dbName = dotenv.get("DB_NAME");
-            String password = dotenv.get("DB_PASSWORD");
-            String url = "jdbc:postgresql://"+host+":"+port+"/"+dbName;
-            connection = DriverManager.getConnection(url,user,password);
-        }catch (Exception e){
+            if (connection == null || connection.isClosed()) {
+                String host = dotenv.get("DB_HOST");
+                String port = dotenv.get("DB_PORT");
+                String user = dotenv.get("DB_USER");
+                String dbName = dotenv.get("DB_NAME");
+                String password = dotenv.get("DB_PASSWORD");
+                String url = "jdbc:postgresql://"+host+":"+port+"/"+dbName;
+                connection = DriverManager.getConnection(url,user,password);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return connection;
     }
     public static DbConnection getInstance(){
         if (instance ==null ){
@@ -33,7 +37,7 @@ public class DbConnection {
         return instance;
     }
     public  Connection getConnection(){
-        return connection;
+        return getValidConnection();
     }
 
     public static void main(String[] args) {

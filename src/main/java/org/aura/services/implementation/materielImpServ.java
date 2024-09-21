@@ -1,6 +1,7 @@
 package org.aura.services.implementation;
 
 import org.aura.models.Materiel;
+import org.aura.models.Projet;
 import org.aura.repository.implementation.materielRepoImpl;
 import org.aura.services.interfaces.materielInterfaceServ;
 import static org.aura.utils.LoggerUtils.*;
@@ -24,9 +25,9 @@ public class materielImpServ implements materielInterfaceServ {
     }
 
     @Override
-    public void createMateriel(Materiel materiel) {
+    public void createMateriel(Materiel materiel, Projet projet) {
         if (materiel != null){
-            materielRepo.addMateriel(materiel);
+            materielRepo.addMateriel(materiel, projet.getId());
         }else {
             logWarn("Materiel not created");
         }

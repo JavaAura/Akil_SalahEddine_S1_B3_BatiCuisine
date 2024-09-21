@@ -14,7 +14,7 @@ public class clientConsoleUi {
     public clientConsoleUi() {
         this.clientImplService = new clientImplServ();
     }
-    public void rechercheClientExist(Scanner scanner){
+    public Client rechercheClientExist(Scanner scanner){
         logInfo("--- Recherche de client existant --- ");
         logInfo("\nEntrez le nom du client : ");
         String clientNom = scanner.nextLine();
@@ -24,8 +24,9 @@ public class clientConsoleUi {
         }else {
             logInfo("Client no trouvé :)");
         }
+        return client;
     }
-    public void ajouterClient(Scanner scanner){
+    public Client ajouterClient(Scanner scanner){
         logInfo("--- Ajout d'un nouveau client ---");
         logInfo("\nEntrez le nom du client : ");
         String clientNom = scanner.nextLine();
@@ -48,6 +49,7 @@ public class clientConsoleUi {
         Client client = new Client(clientNom,address,phoneNumber,estProfessionnel);
         clientImplService.createClient(client);
         logInfo("Client est ajouté " );
+        return client;
     }
 
     public static void main(String[] args) {

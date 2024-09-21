@@ -1,5 +1,7 @@
 package org.aura.view;
 
+import org.aura.models.Client;
+import org.aura.models.Projet;
 import org.aura.services.implementation.projetImplServ;
 import static org.aura.utils.LoggerUtils.logInfo;
 
@@ -25,21 +27,32 @@ public class projectConsoleUi {
         logInfo("2. Ajouter un nouveau client");
         logInfo("Choisissez une option : ");
         int clientOption = scanner.nextInt();
+        scanner.nextLine();
         if (clientOption<1 || clientOption>2){
             logInfo("Option invalide");
         }
+        Client client;
         if (clientOption == 1) {
-             clientConsoleUi.rechercheClientExist(scanner);
+            client = clientConsoleUi.rechercheClientExist(scanner);
         } else {
-            clientConsoleUi.ajouterClient(scanner);
+            client = clientConsoleUi.ajouterClient(scanner);
         }
-        logInfo("--- Création d'un Nouveau Projet ---");
         scanner.nextLine();
+        logInfo("--- Création d'un Nouveau Projet ---");
         logInfo("Entrez le nom du projet : ");
         String projectNom = scanner.nextLine();
         logInfo("Entrez la surface de la cuisine (en m²) : ");
         double surface = scanner.nextDouble();
+        Projet projet = new Projet();
+        projet.setNomProjet(projectNom);
+        projet.setSurface(surface);
+        projetService.createProject(projet,client);
         materialConsoleUi.ajouterMateriel(scanner);
         workForceConsoleUi.ajouterMainOeuvre(scanner);
+    }
+
+    public static void main(String[] args) {
+        projectConsoleUi projectConsoleUi  = new projectConsoleUi();
+        projectConsoleUi.creeProjet(new Scanner(System.in));
     }
 }

@@ -1,5 +1,6 @@
 package org.aura.services.implementation;
 
+import org.aura.models.Projet;
 import org.aura.models.workforce;
 import org.aura.repository.implementation.mainDoeuvreRepoImpl;
 import org.aura.services.interfaces.workForceInterfaceServ;
@@ -26,9 +27,9 @@ public class workForceImplServ implements workForceInterfaceServ {
     }
 
     @Override
-    public void createWorkForce(workforce workforce) {
+    public void createWorkForce(workforce workforce, Projet projet) {
         if (workforce!=null){
-            mainDoeuvreRepo.addWorkForce(workforce);
+            mainDoeuvreRepo.addWorkForce(workforce,projet.getId());
         }else {
             LoggerUtils.logInfo("Mai d'oeuvre n'a pas créer");
         }

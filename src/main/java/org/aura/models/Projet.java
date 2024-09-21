@@ -11,6 +11,8 @@ public class Projet {
     private double coutTotal;
     private Etat etatProjet;
 
+    public Projet(){}
+
     public Projet(int id,double surface, String nomProjet, double margeBeneficiaire, double coutTotal, Etat etatProjet) {
         this.id = id;
         this.nomProjet = nomProjet;

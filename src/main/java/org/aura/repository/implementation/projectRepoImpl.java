@@ -4,6 +4,7 @@ import org.aura.config.DbConnection;
 import org.aura.models.enums.Etat;
 import org.aura.models.Projet;
 import org.aura.repository.interfaces.projectRepoInterface;
+import org.aura.utils.LoggerUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,8 +76,8 @@ public class projectRepoImpl implements projectRepoInterface {
     }
 
     @Override
-    public void addProject(Projet projet) {
-        String query = "INSERT INTO projet (nomProjet,margeBeneficiaire,coutTotal,etatProjet,surface) VALUES (?,?,?,?,?) ";
+    public void addProject(Projet projet , int clientId) {
+        String query = "INSERT INTO projet (nomProjet,margeBeneficiaire,coutTotal,etatProjet,surface,idclient) VALUES (?,?,?,?::etat,?,?) ";
         try(Connection con = getConnection();
             PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1,projet.getNomProjet());
@@ -84,7 +85,11 @@ public class projectRepoImpl implements projectRepoInterface {
             stmt.setDouble(3,projet.getCoutTotal());
             stmt.setObject(4,projet.getEtatProjet(),java.sql.Types.OTHER);
             stmt.setDouble(5,projet.getSurface());
-            stmt.executeUpdate();
+            stmt.setInt(6,clientId);
+            int rows = stmt.executeUpdate();
+            if (rows>0){
+                LoggerUtils.logInfo("Projet créé avec succès " );
+            }
         }catch (SQLException e){
             e.printStackTrace();
         }

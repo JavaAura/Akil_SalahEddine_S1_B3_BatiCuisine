@@ -45,16 +45,17 @@ public class mainDoeuvreRepoImpl implements mainDoeuvreRepoInterface {
     }
 
     @Override
-    public void addWorkForce(workforce mainDoeuvre) {
-        String query = "INSERT INTO mainDoeuvre (nom,typeComposant,tauxTVA,tauxHoraire,heuresTravail,productiviteOuvrier,mainType) VALUES (?,?,?,?,?,?::laborType) ";
+    public void addWorkForce(workforce mainDoeuvre , int idProjet) {
+        String query = "INSERT INTO mainDoeuvre (nom,tauxTVA,tauxHoraire,heuresTravail,productiviteOuvrier,mainType,projetid) VALUES (?,?,?,?,?,?::laborType,?) ";
         try(Connection con = getConnection();
             PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1,mainDoeuvre.getNom());
-            stmt.setDouble(3,mainDoeuvre.getTauxTVA());
-            stmt.setDouble(4,mainDoeuvre.getTauxHoraire());
-            stmt.setDouble(5,mainDoeuvre.getHeuresTravail());
-            stmt.setDouble(6,mainDoeuvre.getProductiviteOuvrier());
-            stmt.setObject(7,mainDoeuvre.getMainDoeuvreType(),java.sql.Types.OTHER);
+            stmt.setDouble(2,mainDoeuvre.getTauxTVA());
+            stmt.setDouble(3,mainDoeuvre.getTauxHoraire());
+            stmt.setDouble(4,mainDoeuvre.getHeuresTravail());
+            stmt.setDouble(5,mainDoeuvre.getProductiviteOuvrier());
+            stmt.setObject(6,mainDoeuvre.getMainDoeuvreType(),java.sql.Types.OTHER);
+            stmt.setInt(7,idProjet);
             stmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
