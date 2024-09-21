@@ -42,7 +42,7 @@ public class materielRepoImpl implements materielRepoInterface {
     }
 
     @Override
-    public void addMateriel(Materiel materiel , int idProjet) {
+    public void addMateriel(Materiel materiel , int projectId) {
         String query = "INSERT INTO materiel (nom,tauxTVA,coutUnitaire,quantite,coutTransport,coefficientQualite,projetid) VALUES (?,?,?,?,?,?,?) ";
         try(Connection con = getConnection();
             PreparedStatement stmt = con.prepareStatement(query)) {
@@ -52,7 +52,7 @@ public class materielRepoImpl implements materielRepoInterface {
             stmt.setDouble(4,materiel.getQuantite());
             stmt.setDouble(5,materiel.getCoutTransport());
             stmt.setDouble(6,materiel.getCoefficientQualite());
-            stmt.setInt(7,idProjet);
+            stmt.setInt(7,projectId);
             stmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();

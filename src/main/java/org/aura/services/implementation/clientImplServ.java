@@ -43,11 +43,12 @@ public class clientImplServ implements clientInterfaceServ {
     }
 
     @Override
-    public void createClient(Client client) {
-        if (client!=null){
-            clientRepo.addClient(client);
-        }else {
-            logWarn("Client not created");
+    public Client createClient(Client client) {
+        int clientId = clientRepo.addClient(client);
+        if (clientId > 0) {
+            client.setId(clientId);
+            return client;
         }
+        return null;
     }
 }

@@ -19,10 +19,12 @@ public class clientConsoleUi {
         logInfo("\nEntrez le nom du client : ");
         String clientNom = scanner.nextLine();
         Client client = clientImplService.getClientByName(clientNom);
-        if (client != null){
+        if (client != null) {
             logInfo("Client trouvé : " + client);
-        }else {
-            logInfo("Client no trouvé :)");
+            logInfo("ID du client: " + client.getId());
+        } else {
+            logInfo("Client non trouvé.");
+            return null;
         }
         return client;
     }
@@ -39,6 +41,7 @@ public class clientConsoleUi {
         logInfo("2. régulier");
         logInfo("Tapez un 1 pour un client Professionnel ou 2 pour un client régulier");
         int choix = scanner.nextInt();
+        scanner.nextLine();
         if (choix<1 || choix>2){
             logWarn("Option invalide");
         }
@@ -47,9 +50,13 @@ public class clientConsoleUi {
             estProfessionnel = true;
         }
         Client client = new Client(clientNom,address,phoneNumber,estProfessionnel);
-        clientImplService.createClient(client);
-        logInfo("Client est ajouté " );
-        return client;
+        Client createdClient = clientImplService.createClient(client);
+        if (createdClient != null) {
+            logInfo("Client ajouté avec succès. ID du client: " + createdClient.getId());
+        } else {
+            logWarn("Erreur lors de l'ajout du client.");
+        }
+        return createdClient;
     }
 
     public static void main(String[] args) {

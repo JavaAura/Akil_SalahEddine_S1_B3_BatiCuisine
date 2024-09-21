@@ -45,7 +45,7 @@ public class mainDoeuvreRepoImpl implements mainDoeuvreRepoInterface {
     }
 
     @Override
-    public void addWorkForce(workforce mainDoeuvre , int idProjet) {
+    public void addWorkForce(workforce mainDoeuvre , int projectId) {
         String query = "INSERT INTO mainDoeuvre (nom,tauxTVA,tauxHoraire,heuresTravail,productiviteOuvrier,mainType,projetid) VALUES (?,?,?,?,?,?::laborType,?) ";
         try(Connection con = getConnection();
             PreparedStatement stmt = con.prepareStatement(query)) {
@@ -55,7 +55,7 @@ public class mainDoeuvreRepoImpl implements mainDoeuvreRepoInterface {
             stmt.setDouble(4,mainDoeuvre.getHeuresTravail());
             stmt.setDouble(5,mainDoeuvre.getProductiviteOuvrier());
             stmt.setObject(6,mainDoeuvre.getMainDoeuvreType(),java.sql.Types.OTHER);
-            stmt.setInt(7,idProjet);
+            stmt.setInt(7,projectId);
             stmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();

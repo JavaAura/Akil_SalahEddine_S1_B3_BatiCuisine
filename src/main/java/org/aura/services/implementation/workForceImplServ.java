@@ -27,9 +27,9 @@ public class workForceImplServ implements workForceInterfaceServ {
     }
 
     @Override
-    public void createWorkForce(workforce workforce, Projet projet) {
+    public void createWorkForce(workforce workforce, int projetId) {
         if (workforce!=null){
-            mainDoeuvreRepo.addWorkForce(workforce,projet.getId());
+            mainDoeuvreRepo.addWorkForce(workforce, projetId);
         }else {
             LoggerUtils.logInfo("Mai d'oeuvre n'a pas créer");
         }

@@ -6,10 +6,7 @@ import org.aura.models.Projet;
 import org.aura.repository.interfaces.projectRepoInterface;
 import org.aura.utils.LoggerUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,22 +73,24 @@ public class projectRepoImpl implements projectRepoInterface {
     }
 
     @Override
-    public void addProject(Projet projet , int clientId) {
+    public int addProject(Projet projet , int clientId) {
         String query = "INSERT INTO projet (nomProjet,margeBeneficiaire,coutTotal,etatProjet,surface,idclient) VALUES (?,?,?,?::etat,?,?) ";
         try(Connection con = getConnection();
-            PreparedStatement stmt = con.prepareStatement(query)) {
+            PreparedStatement stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1,projet.getNomProjet());
             stmt.setDouble(2,projet.getMargeBeneficiaire());
             stmt.setDouble(3,projet.getCoutTotal());
             stmt.setObject(4,projet.getEtatProjet(),java.sql.Types.OTHER);
             stmt.setDouble(5,projet.getSurface());
             stmt.setInt(6,clientId);
-            int rows = stmt.executeUpdate();
-            if (rows>0){
-                LoggerUtils.logInfo("Projet créé avec succès " );
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
             }
         }catch (SQLException e){
             e.printStackTrace();
         }
+        return -1;
     }
 }

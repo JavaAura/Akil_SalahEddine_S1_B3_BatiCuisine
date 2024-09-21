@@ -5,5 +5,5 @@ import org.aura.models.Projet;
 
 public interface materielInterfaceServ {
     Materiel getMateriel(int id);
-    void createMateriel(Materiel materiel , Projet projet);
+    void createMateriel(Materiel materiel ,int projetId);
 }

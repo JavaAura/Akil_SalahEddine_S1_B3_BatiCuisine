@@ -1,5 +1,6 @@
 package org.aura.view;
 
+import org.aura.models.Projet;
 import org.aura.models.enums.mainDoeuvreType;
 import org.aura.models.workforce;
 import org.aura.services.implementation.workForceImplServ;
@@ -15,7 +16,7 @@ public workForceConsoleUi(){
     this.workForceImplServ = new workForceImplServ();
 }
 
-    public void ajouterMainOeuvre(Scanner scanner){
+    public void ajouterMainOeuvre(Scanner scanner, int projetId){
         LoggerUtils.logInfo("--- Ajout des matériaux ---");
         String ajouterAutreMateriel ;
         do {
@@ -44,7 +45,7 @@ public workForceConsoleUi(){
             LoggerUtils.logInfo("Entrez le facteur de productivité : ");
             double productiviteOuvrier = scanner.nextDouble();
             workforce workforce = new workforce(mainNom,tauxTVA,tauxHoraire,heuresTravail,productiviteOuvrier,laborType);
-            workForceImplServ.createWorkForce(workforce);
+            workForceImplServ.createWorkForce(workforce, projetId);
             System.out.println("Main-d'œuvre ajoutée avec succès !");
             System.out.print("Voulez-vous ajouter un autre type de main-d'œuvre ? (y/n) : ");
             ajouterAutreMateriel = scanner.next();

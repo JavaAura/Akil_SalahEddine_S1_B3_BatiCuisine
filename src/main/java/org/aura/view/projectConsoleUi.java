@@ -2,6 +2,7 @@ package org.aura.view;
 
 import org.aura.models.Client;
 import org.aura.models.Projet;
+import org.aura.models.enums.Etat;
 import org.aura.services.implementation.projetImplServ;
 import static org.aura.utils.LoggerUtils.logInfo;
 
@@ -21,7 +22,6 @@ public class projectConsoleUi {
     }
 
     public void creeProjet(Scanner scanner){
-
         logInfo("--- Recherche de client ---");
         logInfo("1. Chercher un client existant");
         logInfo("2. Ajouter un nouveau client");
@@ -46,9 +46,14 @@ public class projectConsoleUi {
         Projet projet = new Projet();
         projet.setNomProjet(projectNom);
         projet.setSurface(surface);
-        projetService.createProject(projet,client);
-        materialConsoleUi.ajouterMateriel(scanner);
-        workForceConsoleUi.ajouterMainOeuvre(scanner);
+        projet.setEtatProjet(Etat.Encours);
+        int projetId = projetService.createProject(projet, client);
+        if (projetId == -1) {
+            logInfo("Erreur lors de la création du projet.");
+            return;
+        }
+        materialConsoleUi.ajouterMateriel(scanner, projetId);
+        workForceConsoleUi.ajouterMainOeuvre(scanner, projetId);
     }
 
     public static void main(String[] args) {

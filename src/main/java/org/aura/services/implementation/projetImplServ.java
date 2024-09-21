@@ -26,7 +26,7 @@ public class projetImplServ implements projetInterfaceServ {
     }
 
     @Override
-    public void createProject(Projet projet, Client client) {
-        projectRepoImpl.addProject(projet,client.getId());
+    public int createProject(Projet projet, Client client) {
+        return projectRepoImpl.addProject(projet,client.getId());
     }
 }

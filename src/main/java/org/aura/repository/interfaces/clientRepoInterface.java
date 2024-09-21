@@ -8,5 +8,5 @@ public interface clientRepoInterface {
     List<Client> findAllClients();
     Client findClientById(int id);
     Client findClientByName(String name);
-    void addClient(Client client);
+    int addClient(Client client);
 }

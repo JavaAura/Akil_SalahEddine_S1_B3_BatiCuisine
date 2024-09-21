@@ -8,5 +8,5 @@ public interface clientInterfaceServ {
     List<Client> getAllClients();
     Client getClient(int id);
     Client getClientByName(String name);
-    void createClient(Client client);
+    Client createClient(Client client);
 }

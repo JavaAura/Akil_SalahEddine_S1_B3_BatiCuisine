@@ -3,6 +3,7 @@ package org.aura.repository.implementation;
 import org.aura.config.DbConnection;
 import org.aura.repository.interfaces.clientRepoInterface;
 import org.aura.models.Client;
+import org.aura.utils.LoggerUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -82,7 +83,7 @@ public class clientRepoImpl implements clientRepoInterface {
     }
 
     @Override
-    public void addClient(Client client) {
+    public int addClient(Client client) {
         String query = "INSERT INTO client (nom,adresse,telephone,estprofessionnel) VALUES (?,?,?,?) ";
         try(Connection con = getConnection();
         PreparedStatement stmt = con.prepareStatement(query)) {
@@ -90,9 +91,13 @@ public class clientRepoImpl implements clientRepoInterface {
         stmt.setString(2,client.getAdresse());
         stmt.setString(3,client.getTelephone());
         stmt.setBoolean(4,client.getEstProfessionnel());
-        stmt.executeUpdate();
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
         }catch (SQLException e){
             e.printStackTrace();
         }
+        return -1;
     }
 }

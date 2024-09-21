@@ -8,5 +8,5 @@ import java.util.List;
 public interface projetInterfaceServ {
     List<Projet> getAllProjects();
     Projet getProject(int id);
-    void createProject(Projet projet, Client client);
+    int createProject(Projet projet, Client client);
 }

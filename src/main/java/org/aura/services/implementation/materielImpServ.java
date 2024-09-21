@@ -25,9 +25,9 @@ public class materielImpServ implements materielInterfaceServ {
     }
 
     @Override
-    public void createMateriel(Materiel materiel, Projet projet) {
+    public void createMateriel(Materiel materiel, int projetId) {
         if (materiel != null){
-            materielRepo.addMateriel(materiel, projet.getId());
+            materielRepo.addMateriel(materiel, projetId);
         }else {
             logWarn("Materiel not created");
         }
