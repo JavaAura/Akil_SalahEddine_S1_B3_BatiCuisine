@@ -23,9 +23,9 @@ public class devisImplServ implements devisInterfaceServ {
     }
 
     @Override
-    public void createDevis(Devis devis) {
+    public void createDevis(Devis devis,int projectId) {
         if (devis != null){
-            devisRepo.addDevis(devis);
+            devisRepo.addDevis(devis,projectId);
         }else {
             LoggerUtils.logWarn("Devis not created");
         }

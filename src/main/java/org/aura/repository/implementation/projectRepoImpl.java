@@ -127,10 +127,7 @@ public class projectRepoImpl implements projectRepoInterface {
             stmt.setDouble(1, coutTotal);
             stmt.setDouble(2, margeBeneficiaire);
             stmt.setInt(3, projectId);
-            int rowsUpdated = stmt.executeUpdate();
-            if (rowsUpdated > 0) {
-                LoggerUtils.logInfo("Le projet avec ID " + projectId + " a été mis à jour avec succès.");
-            }
+            stmt.executeUpdate();
         } catch (SQLException e) {
             LoggerUtils.logError("Erreur lors de la mise à jour du projet : " + e.getMessage());
             e.printStackTrace();

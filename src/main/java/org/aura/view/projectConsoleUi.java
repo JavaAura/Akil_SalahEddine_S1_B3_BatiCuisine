@@ -18,11 +18,13 @@ public class projectConsoleUi {
     clientConsoleUi clientConsoleUi ;
     materialConsoleUi materialConsoleUi;
     workForceConsoleUi workForceConsoleUi;
+    devisConsoleUi devisConsoleUi;
     public projectConsoleUi() {
         this.projetService = new projetImplServ();
         this.clientConsoleUi = new clientConsoleUi();
         this.materialConsoleUi = new materialConsoleUi();
         this.workForceConsoleUi = new workForceConsoleUi();
+        this.devisConsoleUi = new devisConsoleUi();
     }
 
     public void creeProjet(Scanner scanner){
@@ -59,6 +61,7 @@ public class projectConsoleUi {
          materialConsoleUi.ajouterMateriel(scanner, projetId);
          workForceConsoleUi.ajouterMainOeuvre(scanner, projetId);
          afficherDetailsProjetEtCalculCout(scanner,projetId);
+        devisConsoleUi.createDevis(scanner,projetId);
     }
 
     public void afficherDetailsProjetEtCalculCout(Scanner scanner, int projetId) {

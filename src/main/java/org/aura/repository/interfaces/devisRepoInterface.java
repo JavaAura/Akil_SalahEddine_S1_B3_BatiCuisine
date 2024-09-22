@@ -4,5 +4,5 @@ import org.aura.models.Devis;
 
 public interface devisRepoInterface {
     Devis findDevisById(int id) ;
-    void addDevis (Devis devis);
+    void addDevis (Devis devis,int projectId);
 }

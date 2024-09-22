@@ -5,5 +5,5 @@ import org.aura.models.Materiel;
 
 public interface devisInterfaceServ {
     Devis getDevis(int id);
-    void createDevis(Devis devis);
+    void createDevis(Devis devis,int projectId);
 }

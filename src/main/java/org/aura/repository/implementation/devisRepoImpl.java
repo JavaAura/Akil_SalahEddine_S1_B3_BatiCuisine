@@ -44,14 +44,15 @@ public class devisRepoImpl implements devisRepoInterface {
     }
 
     @Override
-    public void addDevis(Devis devis) {
-        String query = "INSERT INTO devis (montantEstime,dateEmission,dateValidite,accepte) VALUES (?,?,?,?) ";
+    public void addDevis(Devis devis,int projectId) {
+        String query = "INSERT INTO devis (montantEstime,dateEmission,dateValidite,accepte,idprojet) VALUES (?,?,?,?,?) ";
         try(Connection con = getConnection();
             PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setDouble(1,devis.getMontantEstime());
             stmt.setObject(2,devis.getDateEmission());
             stmt.setObject(3,devis.getDateValidite());
             stmt.setBoolean(4,devis.getAccepte());
+            stmt.setInt(5,projectId);
             stmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
