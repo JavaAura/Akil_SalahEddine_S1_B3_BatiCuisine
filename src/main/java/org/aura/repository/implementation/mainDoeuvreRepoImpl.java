@@ -46,7 +46,7 @@ public class mainDoeuvreRepoImpl implements mainDoeuvreRepoInterface {
 
     @Override
     public void addWorkForce(workforce mainDoeuvre , int projectId) {
-        String query = "INSERT INTO mainDoeuvre (nom,tauxTVA,tauxHoraire,heuresTravail,productiviteOuvrier,mainType,projetid) VALUES (?,?,?,?,?,?::laborType,?) ";
+        String query = "INSERT INTO mainDoeuvre (nom,tauxTVA,tauxHoraire,heuresTravail,productivite,mainType,projetid) VALUES (?,?,?,?,?,?::laborType,?) ";
         try(Connection con = getConnection();
             PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1,mainDoeuvre.getNom());

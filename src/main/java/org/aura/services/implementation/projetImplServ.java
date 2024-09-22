@@ -4,8 +4,10 @@ import org.aura.models.Client;
 import org.aura.models.Projet;
 import org.aura.repository.implementation.projectRepoImpl;
 import org.aura.services.interfaces.projetInterfaceServ;
+import org.aura.utils.LoggerUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 public class projetImplServ implements projetInterfaceServ {
 
@@ -22,7 +24,11 @@ public class projetImplServ implements projetInterfaceServ {
 
     @Override
     public Projet getProject(int id) {
-        return null;
+       return Optional.ofNullable(projectRepoImpl.findProjectById(id)).orElseGet
+                (()->{
+                    LoggerUtils.logInfo("Pas de projet correspondent a ce ID");
+                    return null;
+                });
     }
 
     @Override
