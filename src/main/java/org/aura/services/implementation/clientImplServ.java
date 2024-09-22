@@ -37,7 +37,7 @@ public class clientImplServ implements clientInterfaceServ {
     public Client getClientByName(String name) {
         return Optional.ofNullable(clientRepo.findClientByName(name))
                 .orElseGet(() -> {
-                    logInfo("Client non trouvé");
+                    logInfo("Aucun client trouvé avec ce nom. Veuillez réessayer.");
                     return null;
                 });
     }

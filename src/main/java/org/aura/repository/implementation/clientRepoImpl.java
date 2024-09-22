@@ -3,12 +3,7 @@ package org.aura.repository.implementation;
 import org.aura.config.DbConnection;
 import org.aura.repository.interfaces.clientRepoInterface;
 import org.aura.models.Client;
-import org.aura.utils.LoggerUtils;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,12 +81,13 @@ public class clientRepoImpl implements clientRepoInterface {
     public int addClient(Client client) {
         String query = "INSERT INTO client (nom,adresse,telephone,estprofessionnel) VALUES (?,?,?,?) ";
         try(Connection con = getConnection();
-        PreparedStatement stmt = con.prepareStatement(query)) {
+        PreparedStatement stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
         stmt.setString(1,client.getNom());
         stmt.setString(2,client.getAdresse());
         stmt.setString(3,client.getTelephone());
         stmt.setBoolean(4,client.getEstProfessionnel());
-        ResultSet rs = stmt.executeQuery();
+        stmt.executeUpdate();
+        ResultSet rs = stmt.getGeneratedKeys();
         if (rs.next()) {
             return rs.getInt(1);
         }

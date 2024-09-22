@@ -14,7 +14,8 @@ public class materialConsoleUi {
         this.materielImpServ = new materielImpServ();
     }
 
-    public void ajouterMateriel(Scanner scanner, int projetId){
+    public double ajouterMateriel(Scanner scanner, int projetId){
+        double coutTotalMateriel ;
         LoggerUtils.logInfo("--- Ajout des matériaux ---");
         String ajouterAutreMateriel ;
         do {
@@ -36,6 +37,10 @@ public class materialConsoleUi {
             LoggerUtils.logInfo("Matériau ajouté avec succès !");
             LoggerUtils.logInfo("Voulez-vous ajouter un autre matériau ? (y/n) : ");
             ajouterAutreMateriel = scanner.nextLine();
+
+             coutTotalMateriel = (coutUnitaire * quantite * coefficientQualite) + coutTransport;
+
         }while (ajouterAutreMateriel.equalsIgnoreCase("y"));
+        return coutTotalMateriel;
     }
 }

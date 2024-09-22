@@ -55,6 +55,11 @@ public class projectConsoleUi {
         materialConsoleUi.ajouterMateriel(scanner, projetId);
         workForceConsoleUi.ajouterMainOeuvre(scanner, projetId);
     }
+    public static void calculateProjectCost(Scanner scanner) {
+        System.out.println("--- Calcul du coût d'un projet ---");
+
+        System.out.println("Calcul du coût en cours...");
+    }
 
     public static void main(String[] args) {
         projectConsoleUi projectConsoleUi  = new projectConsoleUi();

@@ -16,7 +16,8 @@ public workForceConsoleUi(){
     this.workForceImplServ = new workForceImplServ();
 }
 
-    public void ajouterMainOeuvre(Scanner scanner, int projetId){
+    public double ajouterMainOeuvre(Scanner scanner, int projetId){
+        double coutTotalMain;
         LoggerUtils.logInfo("--- Ajout des matériaux ---");
         String ajouterAutreMateriel ;
         do {
@@ -49,8 +50,11 @@ public workForceConsoleUi(){
             System.out.println("Main-d'œuvre ajoutée avec succès !");
             System.out.print("Voulez-vous ajouter un autre type de main-d'œuvre ? (y/n) : ");
             ajouterAutreMateriel = scanner.next();
+            coutTotalMain = tauxHoraire * heuresTravail * productiviteOuvrier;
 
         }while (ajouterAutreMateriel.equals("y"));
+
+        return coutTotalMain;
     }
 
 
