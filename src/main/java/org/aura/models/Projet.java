@@ -2,6 +2,8 @@ package org.aura.models;
 
 import org.aura.models.enums.Etat;
 
+import java.util.List;
+
 public class Projet {
 
     private int id;
@@ -10,6 +12,9 @@ public class Projet {
     private double margeBeneficiaire;
     private double coutTotal;
     private Etat etatProjet;
+    private Client client;
+    private List<Materiel>materiels;
+    private List<workforce>workforces;
 
     public Projet(){}
 
@@ -20,6 +25,30 @@ public class Projet {
         this.margeBeneficiaire = margeBeneficiaire;
         this.coutTotal = coutTotal;
         this.etatProjet = etatProjet;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public List<Materiel> getMateriels() {
+        return materiels;
+    }
+
+    public void setMateriels(List<Materiel> materiels) {
+        this.materiels = materiels;
+    }
+
+    public List<workforce> getWorkforces() {
+        return workforces;
+    }
+
+    public void setWorkforces(List<workforce> workforces) {
+        this.workforces = workforces;
     }
 
     public int getId() {
