@@ -64,6 +64,12 @@ public class projectConsoleUi {
     public void afficherDetailsProjetEtCalculCout(Scanner scanner, int projetId) {
         LoggerUtils.logInfo("--- Calcul du coût et affichage des détails du projet ---");
 
+        LoggerUtils.logInfo("Souhaitez-vous appliquer une marge bénéficiaire au projet ? (y/n) : ");
+        String appliqueMarge = scanner.next();
+        double margeBeneficiaire = 0.0;
+        LoggerUtils.logInfo("Entrez le pourcentage de marge bénéficiaire (%) : ");
+        double pourcentageMarge = scanner.nextDouble();
+
         Projet projet = projetService.getProject(projetId);
         if (projet != null) {
             System.out.println("--- Détails du Projet ---");
@@ -81,38 +87,37 @@ public class projectConsoleUi {
             for (Materiel materiel : projet.getMateriels()) {
                 double coutMateriel = materiel.getQuantite() * materiel.getCoutUnitaire() + materiel.getCoutTransport();
                 coutTotalMateriaux += coutMateriel;
-                System.out.printf("- %s : %.2f € (quantité : %.2f, coût unitaire : %.2f €/unité, qualité : %.2f, transport : %.2f €)\n",
+                System.out.printf("- %s : %.2f DH  (quantité : %.2f, coût unitaire : %.2f DH /unité, qualité : %.2f, transport : %.2f DH )\n",
                         materiel.getNom(), coutMateriel, materiel.getQuantite(), materiel.getCoutUnitaire(), materiel.getCoefficientQualite(), materiel.getCoutTransport());
             }
-            System.out.printf("**Coût total des matériaux avant TVA : %.2f €**\n", coutTotalMateriaux);
-            System.out.printf("**Coût total des matériaux avec TVA (20%%) : %.2f €**\n", coutTotalMateriaux * 1.2);
+            System.out.printf("**Coût total des matériaux avant TVA : %.2f DH **\n", coutTotalMateriaux);
+            System.out.printf("**Coût total des matériaux avec TVA (20%%) : %.2f DH **\n", coutTotalMateriaux * 1.2);
 
             System.out.println("\n--- Détail de la Main-d'œuvre ---");
             double coutTotalMainOeuvre = 0;
             for (workforce mainDoeuvre : projet.getWorkforces()) {
                 double coutMainOeuvre = mainDoeuvre.getHeuresTravail() * mainDoeuvre.getTauxHoraire();
                 coutTotalMainOeuvre += coutMainOeuvre;
-                System.out.printf("- %s : %.2f € (taux horaire : %.2f €/h, heures travaillées : %.2f h, productivité : %.2f)\n",
+                System.out.printf("- %s : %.2f DH  (taux horaire : %.2f DH /h, heures travaillées : %.2f h, productivité : %.2f)\n",
                         mainDoeuvre.getNom(), coutMainOeuvre, mainDoeuvre.getTauxHoraire(), mainDoeuvre.getHeuresTravail(), mainDoeuvre.getProductiviteOuvrier());
             }
-            System.out.printf("**Coût total de la main-d'œuvre avant TVA : %.2f €**\n", coutTotalMainOeuvre);
-            System.out.printf("**Coût total de la main-d'œuvre avec TVA (20%%) : %.2f €**\n", coutTotalMainOeuvre * 1.2);
+
+            System.out.printf("**Coût total de la main-d'œuvre avant TVA : %.2f DH **\n", coutTotalMainOeuvre);
+            System.out.printf("**Coût total de la main-d'œuvre avec TVA (20%%) : %.2f DH **\n", coutTotalMainOeuvre * 1.2);
 
             double coutTotalAvantMarge = coutTotalMateriaux + coutTotalMainOeuvre;
-            System.out.printf("\n--- Coût total avant marge : %.2f € ---\n", coutTotalAvantMarge);
+            System.out.printf("\n--- Coût total avant marge : %.2f DH  ---\n", coutTotalAvantMarge);
 
-            LoggerUtils.logInfo("Souhaitez-vous appliquer une marge bénéficiaire au projet ? (y/n) : ");
-            String appliqueMarge = scanner.next();
-            double margeBeneficiaire = 0.0;
             if (appliqueMarge.equalsIgnoreCase("y")) {
-                LoggerUtils.logInfo("Entrez le pourcentage de marge bénéficiaire (%) : ");
-                double pourcentageMarge = scanner.nextDouble();
                 margeBeneficiaire = coutTotalAvantMarge * (pourcentageMarge / 100);
             }
 
             double coutTotalFinal = coutTotalAvantMarge + margeBeneficiaire;
-            System.out.printf("Marge bénéficiaire (%.2f%%) : %.2f €\n", (margeBeneficiaire / coutTotalAvantMarge) * 100, margeBeneficiaire);
-            System.out.printf("**Coût total final du projet : %.2f €**\n", coutTotalFinal);
+            System.out.printf("Marge bénéficiaire (%.2f%%) : %.2f DH \n", (margeBeneficiaire / coutTotalAvantMarge) * 100, margeBeneficiaire);
+            System.out.printf("**Coût total final du projet : %.2f DH **\n", coutTotalFinal);
+
+            projetService.updateProject(projetId,coutTotalFinal,margeBeneficiaire);
+
         } else {
             LoggerUtils.logError("Projet non trouvé.");
         }

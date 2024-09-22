@@ -32,6 +32,11 @@ public class projetImplServ implements projetInterfaceServ {
     }
 
     @Override
+    public void updateProject(int projectId, double coutTotal, double margeBeneficiaire) {
+        projectRepoImpl.updateProject( projectId,coutTotal,margeBeneficiaire);
+    }
+
+    @Override
     public int createProject(Projet projet, Client client) {
         return projectRepoImpl.addProject(projet,client.getId());
     }

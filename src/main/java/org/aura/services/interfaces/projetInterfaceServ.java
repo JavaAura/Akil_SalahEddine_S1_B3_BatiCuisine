@@ -9,4 +9,5 @@ public interface projetInterfaceServ {
     List<Projet> getAllProjects();
     Projet getProject(int id);
     int createProject(Projet projet, Client client);
+    void updateProject (int projectId, double coutTotal, double margeBeneficiaire);
 }
