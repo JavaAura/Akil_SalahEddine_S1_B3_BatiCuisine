@@ -61,7 +61,12 @@ public class projectConsoleUi {
          materialConsoleUi.ajouterMateriel(scanner, projetId);
          workForceConsoleUi.ajouterMainOeuvre(scanner, projetId);
          afficherDetailsProjetEtCalculCout(scanner,projetId);
-        devisConsoleUi.createDevis(scanner,projetId);
+       boolean accepte =  devisConsoleUi.createDevis(scanner,projetId);
+       if (accepte){
+           projetService.updateEtatProject(projetId,Etat.Terminé);
+       }else {
+           projetService.updateEtatProject(projetId,Etat.Annulé);
+       }
     }
 
     public void afficherDetailsProjetEtCalculCout(Scanner scanner, int projetId) {

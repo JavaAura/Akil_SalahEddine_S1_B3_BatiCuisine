@@ -119,7 +119,7 @@ public class projectRepoImpl implements projectRepoInterface {
         }
         return projet;
     }
-
+    @Override
     public void updateProject(int projectId, double coutTotal, double margeBeneficiaire) {
         String updateQuery = "UPDATE projet SET couttotal = ?, margebeneficiaire = ? WHERE id = ?";
         try (Connection con = getConnection();
@@ -134,6 +134,19 @@ public class projectRepoImpl implements projectRepoInterface {
         }
     }
 
+    @Override
+    public void updateEtatProject(int projectId, Etat etat) {
+        String updateQuery = "UPDATE projet SET etatprojet = ?::etat WHERE id = ?";
+        try (Connection con = getConnection();
+             PreparedStatement stmt = con.prepareStatement(updateQuery)) {
+            stmt.setObject(1, etat.name());
+            stmt.setInt(2, projectId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            LoggerUtils.logError("Erreur lors de la mise à jour du projet : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public int addProject(Projet projet , int clientId) {

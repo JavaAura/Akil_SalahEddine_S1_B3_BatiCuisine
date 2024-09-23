@@ -1,7 +1,9 @@
 package org.aura.view;
 
 import org.aura.models.Devis;
+import org.aura.models.enums.Etat;
 import org.aura.services.implementation.devisImplServ;
+import org.aura.services.implementation.projetImplServ;
 import org.aura.utils.LoggerUtils;
 import org.aura.utils.dateUtilis;
 
@@ -10,11 +12,11 @@ import java.util.Scanner;
 
 public class devisConsoleUi {
     private devisImplServ devisImplServ;
-
+    private projetImplServ projetImplServ;
     public devisConsoleUi() {
         this.devisImplServ = new devisImplServ();
     }
-    public void createDevis(Scanner scanner,int projectId){
+    public boolean createDevis(Scanner scanner,int projectId){
         LoggerUtils.logInfo("--- Enregistrement du Devis ---");
         LoggerUtils.logInfo("Entrez le montant estimer : ");
         double montantEstimer = scanner.nextDouble();
@@ -47,6 +49,7 @@ public class devisConsoleUi {
         } else {
             LoggerUtils.logInfo("Le devis n'a pas été enregistré.");
         }
+        return accepte;
     }
 
     public  void afficherDevis(Scanner scanner) {
