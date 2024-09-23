@@ -7,7 +7,7 @@ import org.aura.repository.implementation.projectRepoImpl;
 import org.aura.services.interfaces.projetInterfaceServ;
 import org.aura.utils.LoggerUtils;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class projetImplServ implements projetInterfaceServ {
@@ -19,8 +19,8 @@ public class projetImplServ implements projetInterfaceServ {
     }
 
     @Override
-    public List<Projet> getAllProjects() {
-        return List.of();
+    public Map<Integer , Projet> getAllProjects() {
+        return projectRepoImpl.findAllProjects();
     }
 
     @Override
