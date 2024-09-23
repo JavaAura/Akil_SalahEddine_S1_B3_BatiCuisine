@@ -11,6 +11,7 @@ public class menuConsoleUi {
         Scanner scanner = new Scanner(System.in);
         int option;
         do {
+            scanner.nextLine();
             LoggerUtils.logInfo("=== Menu Principal ===");
             LoggerUtils.logInfo("1. Créer un nouveau projet");
             LoggerUtils.logInfo("2. Afficher les projets existants");
@@ -23,6 +24,12 @@ public class menuConsoleUi {
                     projectConsoleUi.creeProjet(scanner);
                     break;
                 case 2 :
+                    projectConsoleUi.displayAllProjects();
+                    break;
+                case 3 :
+                    break;
+                case 4 :
+                    LoggerUtils.logInfo("AU REVOIR :)");
 
             }
 

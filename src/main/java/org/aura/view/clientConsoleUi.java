@@ -25,7 +25,6 @@ public class clientConsoleUi {
             logInfo("--- Recherche de client existant ---");
             logInfo("Entrez le nom du client : ");
             String clientNom = scanner.nextLine();
-
             client = clientImplService.getClientByName(clientNom);
             if (client != null) {
                 logInfo("Client trouvé : " + client);
