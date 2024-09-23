@@ -41,7 +41,7 @@ L'architecture adoptée suit une approche en couches, comprenant :
 1. Créez une base de données PostgreSQL appelée `Baticuisine` :
    ```sql
    CREATE DATABASE BatiCuisine;
-2.  Exécutez le fichier schema.sql (fourni avec le projet) pour créer les tables nécessaires dans la base de données.
+2.  Exécutez le fichier Schema.sql (fourni avec le projet "src/main/resources") pour créer les tables nécessaires dans la base de données.
 
 3. Clonez le projet depuis le dépôt Git :
  ```bash
@@ -57,3 +57,7 @@ https://github.com/AkilSalah/Akil_SalahEddine_S1_B3_BatiCuisine.git
 
 # Conception UML
 ## Diagramme de classe :
+![DiagrammeDeClasse.png](src/main/resources/batiCuisineClass.png)
+## Planification JIRA :
+
+

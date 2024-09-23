@@ -1,9 +1,9 @@
 package org.aura.models;
 
 public abstract class Composants {
-    protected int id;
-    protected String nom;
-    protected double tauxTVA;
+    private int id;
+    private String nom;
+    private double tauxTVA;
 
     public Composants(String nom, double tauxTVA) {
         this.nom = nom;
