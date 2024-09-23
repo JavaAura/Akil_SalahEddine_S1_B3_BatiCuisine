@@ -102,7 +102,7 @@ public class projectRepoImpl implements projectRepoInterface {
 
     @Override
     public Projet findProjectById(int id) {
-        String query = "SELECT p.id as projet_id, p.nomprojet, p.surface, " +
+        String query = "SELECT p.id as projet_id, p.nomprojet, p.surface ,p.margebeneficiaire, p.couttotal, p.etatprojet as etatProjet ,"  +
                 "c.id as client_id, c.nom as client_nom, c.adresse, " +
                 "m.id as materiel_id, m.nom as materiel_nom, m.tauxtva as materiel_tauxtva, " +
                 "m.coutunitaire as materiel_coutunitaire, m.quantite as materiel_quantite, " +
@@ -126,6 +126,9 @@ public class projectRepoImpl implements projectRepoInterface {
                     projet.setId(rs.getInt("projet_id"));
                     projet.setNomProjet(rs.getString("nomprojet"));
                     projet.setSurface(rs.getDouble("surface"));
+                    projet.setCoutTotal(rs.getDouble("couttotal"));
+                    projet.setMargeBeneficiaire(rs.getDouble("margebeneficiaire"));
+                    projet.setEtatProjet(Etat.valueOf(rs.getString("etatProjet")));
 
                     Client client = new Client();
                     client.setId(rs.getInt("client_id"));
