@@ -25,154 +25,179 @@ public class projectRepoImpl implements projectRepoInterface {
 
     @Override
     public Map<Integer, Projet> findAllProjects() {
-        HashMap<Integer,Projet> allProjects = new HashMap<>();
-        String query = "SELECT p.id as projet_id, p.nomprojet, p.surface, p.margebeneficiaire, p.couttotal, p.etatprojet as etatProjet ," +
-                "c.id as client_id, c.nom as client_nom, c.adresse, " +
-                "m.id as materiel_id, m.nom as materiel_nom, m.tauxtva as materiel_tauxtva, " +
-                "m.coutunitaire as materiel_coutunitaire, m.quantite as materiel_quantite, " +
-                "m.couttransport as materiel_couttransport, m.coefficientqualite as materiel_coefficientqualite, " +
-                "mo.id as mo_id, mo.nom as mo_nom, mo.tauxtva as mo_tauxtva, " +
-                "mo.tauxhoraire as mo_tauxhoraire, mo.heurestravail as mo_heurestravail, " +
-                "mo.productivite as mo_productivite, mo.maintype " +
+        Map<Integer, Projet> allProjects = new HashMap<>();
+
+        String queryProjets = "SELECT p.id as projet_id, p.nomprojet, p.surface, p.margebeneficiaire, p.couttotal, p.etatprojet as etatProjet, " +
+                "c.id as client_id, c.nom as client_nom, c.adresse " +
                 "FROM projet p " +
-                "JOIN client c ON p.idclient = c.id " +
-                "LEFT JOIN materiel m ON p.id = m.projetid " +
-                "LEFT JOIN maindoeuvre mo ON p.id = mo.projetid ";
+                "JOIN client c ON p.idclient = c.id";
 
         try (Connection con = getConnection();
-             PreparedStatement stmt = con.prepareStatement(query)) {
-            ResultSet rs = stmt.executeQuery();
+             PreparedStatement stmt = con.prepareStatement(queryProjets);
+             ResultSet rs = stmt.executeQuery()) {
+
             while (rs.next()) {
                 int projetId = rs.getInt("projet_id");
-                Projet projet = allProjects.get(projetId);
-                if (projet == null) {
-                    projet = new Projet();
-                    projet.setId(rs.getInt("projet_id"));
-                    projet.setNomProjet(rs.getString("nomprojet"));
-                    projet.setSurface(rs.getDouble("surface"));
-                    projet.setCoutTotal(rs.getDouble("couttotal"));
-                    projet.setMargeBeneficiaire(rs.getDouble("margebeneficiaire"));
-                    projet.setEtatProjet(Etat.valueOf(rs.getString("etatProjet")));
+                Projet projet = new Projet();
+                projet.setId(projetId);
+                projet.setNomProjet(rs.getString("nomprojet"));
+                projet.setSurface(rs.getDouble("surface"));
+                projet.setCoutTotal(rs.getDouble("couttotal"));
+                projet.setMargeBeneficiaire(rs.getDouble("margebeneficiaire"));
+                projet.setEtatProjet(Etat.valueOf(rs.getString("etatProjet")));
 
+                Client client = new Client();
+                client.setId(rs.getInt("client_id"));
+                client.setNom(rs.getString("client_nom"));
+                client.setAdresse(rs.getString("adresse"));
+                projet.setClient(client);
 
-                    Client client = new Client();
-                    client.setId(rs.getInt("client_id"));
-                    client.setNom(rs.getString("client_nom"));
-                    client.setAdresse(rs.getString("adresse"));
-                    projet.setClient(client);
+                projet.setMateriels(new ArrayList<>());
+                projet.setWorkforces(new ArrayList<>());
 
-                    projet.setMateriels(new ArrayList<>());
-                    projet.setWorkforces(new ArrayList<>());
-                    allProjects.put(projetId,projet);
-                }
+                allProjects.put(projetId, projet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return allProjects;
+        }
 
-                int materielId = rs.getInt("materiel_id");
-                if (!rs.wasNull()) {
-                    Materiel materiel = new Materiel(
-                            rs.getString("materiel_nom"),
-                            rs.getDouble("materiel_tauxtva"),
-                            rs.getDouble("materiel_coutunitaire"),
-                            rs.getDouble("materiel_quantite"),
-                            rs.getDouble("materiel_couttransport"),
-                            rs.getDouble("materiel_coefficientqualite")
-                    );
-                    materiel.setId(materielId);
-                    projet.getMateriels().add(materiel);
-                }
+        String queryMateriaux = "SELECT * FROM materiel WHERE projetid = ?";
+        try (Connection con = getConnection();
+             PreparedStatement stmt = con.prepareStatement(queryMateriaux)) {
 
-                int mainDoeuvreId = rs.getInt("mo_id");
-                if (!rs.wasNull()) {
-                    workforce mainDoeuvre = new workforce(
-                            rs.getString("mo_nom"),
-                            rs.getDouble("mo_tauxtva"),
-                            rs.getDouble("mo_tauxhoraire"),
-                            rs.getDouble("mo_heurestravail"),
-                            rs.getDouble("mo_productivite"),
-                            mainDoeuvreType.valueOf(rs.getString("maintype"))
-                    );
-                    mainDoeuvre.setId(mainDoeuvreId);
-                    projet.getWorkforces().add(mainDoeuvre);
+            for (Projet projet : allProjects.values()) {
+                stmt.setInt(1, projet.getId());
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        Materiel materiel = new Materiel(
+                                rs.getString("nom"),
+                                rs.getDouble("tauxtva"),
+                                rs.getDouble("coutunitaire"),
+                                rs.getDouble("quantite"),
+                                rs.getDouble("couttransport"),
+                                rs.getDouble("coefficientqualite")
+                        );
+                        materiel.setId(rs.getInt("id"));
+                        projet.getMateriels().add(materiel);
+                    }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        String queryMainDoeuvre = "SELECT * FROM maindoeuvre WHERE projetid = ?";
+        try (Connection con = getConnection();
+             PreparedStatement stmt = con.prepareStatement(queryMainDoeuvre)) {
+
+            for (Projet projet : allProjects.values()) {
+                stmt.setInt(1, projet.getId());
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        workforce mainDoeuvre = new workforce(
+                                rs.getString("nom"),
+                                rs.getDouble("tauxtva"),
+                                rs.getDouble("tauxhoraire"),
+                                rs.getDouble("heurestravail"),
+                                rs.getDouble("productivite"),
+                                mainDoeuvreType.valueOf(rs.getString("maintype"))
+                        );
+                        mainDoeuvre.setId(rs.getInt("id"));
+                        projet.getWorkforces().add(mainDoeuvre);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return allProjects;
     }
 
     @Override
     public Projet findProjectById(int id) {
-        String query = "SELECT p.id as projet_id, p.nomprojet, p.surface ,p.margebeneficiaire, p.couttotal, p.etatprojet as etatProjet ,"  +
-                "c.id as client_id, c.nom as client_nom, c.adresse, " +
-                "m.id as materiel_id, m.nom as materiel_nom, m.tauxtva as materiel_tauxtva, " +
-                "m.coutunitaire as materiel_coutunitaire, m.quantite as materiel_quantite, " +
-                "m.couttransport as materiel_couttransport, m.coefficientqualite as materiel_coefficientqualite, " +
-                "mo.id as mo_id, mo.nom as mo_nom, mo.tauxtva as mo_tauxtva, " +
-                "mo.tauxhoraire as mo_tauxhoraire, mo.heurestravail as mo_heurestravail, " +
-                "mo.productivite as mo_productivite, mo.maintype " +
+        Projet projet = null;
+        String queryProjet = "SELECT p.id as projet_id, p.nomprojet, p.surface, p.margebeneficiaire, p.couttotal, p.etatprojet as etatProjet, " +
+                "c.id as client_id, c.nom as client_nom, c.adresse " +
                 "FROM projet p " +
                 "JOIN client c ON p.idclient = c.id " +
-                "LEFT JOIN materiel m ON p.id = m.projetid " +
-                "LEFT JOIN maindoeuvre mo ON p.id = mo.projetid " +
                 "WHERE p.id = ?";
-        Projet projet = null;
+
         try (Connection con = getConnection();
-             PreparedStatement stmt = con.prepareStatement(query)) {
+             PreparedStatement stmt = con.prepareStatement(queryProjet)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                if (projet == null) {
-                    projet = new Projet();
-                    projet.setId(rs.getInt("projet_id"));
-                    projet.setNomProjet(rs.getString("nomprojet"));
-                    projet.setSurface(rs.getDouble("surface"));
-                    projet.setCoutTotal(rs.getDouble("couttotal"));
-                    projet.setMargeBeneficiaire(rs.getDouble("margebeneficiaire"));
-                    projet.setEtatProjet(Etat.valueOf(rs.getString("etatProjet")));
+            if (rs.next()) {
+                projet = new Projet();
+                projet.setId(rs.getInt("projet_id"));
+                projet.setNomProjet(rs.getString("nomprojet"));
+                projet.setSurface(rs.getDouble("surface"));
+                projet.setCoutTotal(rs.getDouble("couttotal"));
+                projet.setMargeBeneficiaire(rs.getDouble("margebeneficiaire"));
+                projet.setEtatProjet(Etat.valueOf(rs.getString("etatProjet")));
 
-                    Client client = new Client();
-                    client.setId(rs.getInt("client_id"));
-                    client.setNom(rs.getString("client_nom"));
-                    client.setAdresse(rs.getString("adresse"));
-                    projet.setClient(client);
+                Client client = new Client();
+                client.setId(rs.getInt("client_id"));
+                client.setNom(rs.getString("client_nom"));
+                client.setAdresse(rs.getString("adresse"));
+                projet.setClient(client);
 
-                    projet.setMateriels(new ArrayList<>());
-                    projet.setWorkforces(new ArrayList<>());
-                }
-
-                int materielId = rs.getInt("materiel_id");
-                if (!rs.wasNull()) {
-                    Materiel materiel = new Materiel(
-                            rs.getString("materiel_nom"),
-                            rs.getDouble("materiel_tauxtva"),
-                            rs.getDouble("materiel_coutunitaire"),
-                            rs.getDouble("materiel_quantite"),
-                            rs.getDouble("materiel_couttransport"),
-                            rs.getDouble("materiel_coefficientqualite")
-                    );
-                    materiel.setId(materielId);
-                    projet.getMateriels().add(materiel);
-                }
-
-                int mainDoeuvreId = rs.getInt("mo_id");
-                if (!rs.wasNull()) {
-                    workforce mainDoeuvre = new workforce(
-                            rs.getString("mo_nom"),
-                            rs.getDouble("mo_tauxtva"),
-                            rs.getDouble("mo_tauxhoraire"),
-                            rs.getDouble("mo_heurestravail"),
-                            rs.getDouble("mo_productivite"),
-                            mainDoeuvreType.valueOf(rs.getString("maintype"))
-                    );
-                    mainDoeuvre.setId(mainDoeuvreId);
-                    projet.getWorkforces().add(mainDoeuvre);
-                }
+                projet.setMateriels(new ArrayList<>());
+                projet.setWorkforces(new ArrayList<>());
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
+
+        if (projet != null) {
+            String queryMateriaux = "SELECT * FROM materiel WHERE projetid = ?";
+            try (Connection con = getConnection();
+                 PreparedStatement stmt = con.prepareStatement(queryMateriaux)) {
+                stmt.setInt(1, id);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    Materiel materiel = new Materiel(
+                            rs.getString("nom"),
+                            rs.getDouble("tauxtva"),
+                            rs.getDouble("coutunitaire"),
+                            rs.getDouble("quantite"),
+                            rs.getDouble("couttransport"),
+                            rs.getDouble("coefficientqualite")
+                    );
+                    materiel.setId(rs.getInt("id"));
+                    projet.getMateriels().add(materiel);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            String queryMainDoeuvre = "SELECT * FROM maindoeuvre WHERE projetid = ?";
+            try (Connection con = getConnection();
+                 PreparedStatement stmt = con.prepareStatement(queryMainDoeuvre)) {
+                stmt.setInt(1, id);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    workforce mainDoeuvre = new workforce(
+                            rs.getString("nom"),
+                            rs.getDouble("tauxtva"),
+                            rs.getDouble("tauxhoraire"),
+                            rs.getDouble("heurestravail"),
+                            rs.getDouble("productivite"),
+                            mainDoeuvreType.valueOf(rs.getString("maintype"))
+                    );
+                    mainDoeuvre.setId(rs.getInt("id"));
+                    projet.getWorkforces().add(mainDoeuvre);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
         return projet;
     }
+
     @Override
     public void updateProject(int projectId, double coutTotal, double margeBeneficiaire) {
         String updateQuery = "UPDATE projet SET couttotal = ?, margebeneficiaire = ? WHERE id = ?";

@@ -69,34 +69,6 @@ public class projectConsoleUi {
            projetService.updateEtatProject(projetId,Etat.Annulé);
        }
     }
-    public void displayProject (int projetId){
-
-        Projet projet = projetService.getProject(projetId);
-        if (projet != null) {
-            System.out.println("--- Détails du Projet ---");
-            System.out.println("Nom du projet : " + projet.getNomProjet());
-            if (projet.getClient() != null) {
-                System.out.println("Client : " + projet.getClient().getNom());
-                System.out.println("Adresse du chantier : " + projet.getClient().getAdresse());
-            } else {
-                System.out.println("Client : Non défini");
-            }
-            System.out.println("Surface : " + projet.getSurface() + " m²");
-
-            double coutTotalMateriaux =displayMateriels(projet);
-            double coutTotalMainOeuvre = displayMainDoeuvre(projet);
-
-            double coutTotalAvantMarge = (coutTotalMateriaux + coutTotalMainOeuvre)*1.2;
-            System.out.printf("\n--- Coût total avant marge : %.2f DH  ---\n", coutTotalAvantMarge);
-
-
-            System.out.printf("Marge bénéficiaire (%.2f%%) : %.2f DH \n", (projet.getMargeBeneficiaire() / coutTotalAvantMarge) * 100, projet.getMargeBeneficiaire());
-            System.out.printf("**Coût total final du projet : %.2f DH **\n", projet.getCoutTotal());
-
-        } else {
-            LoggerUtils.logError("Projet non trouvé.");
-        }
-    }
 
     public void afficherDetailsProjetEtCalculCout(Scanner scanner, int projetId) {
         LoggerUtils.logInfo("--- Calcul du coût et affichage des détails du projet ---");
@@ -134,6 +106,62 @@ public class projectConsoleUi {
         }
     }
 
+    public double displayMateriels(Projet projet){
+        System.out.println("1. Matériaux :");
+        double coutTotalMateriaux = 0;
+        for (Materiel materiel : projet.getMateriels()) {
+            double coutMateriel = (materiel.getQuantite() * materiel.getCoutUnitaire()*materiel.getCoefficientQualite()) + materiel.getCoutTransport();
+            coutTotalMateriaux += coutMateriel;
+            System.out.printf("- %s : %.2f DH (quantité : %.2f, coût unitaire : %.2f DH/unité, qualité : %.2f, transport : %.2f DH)\n",
+                    materiel.getNom(), coutMateriel, materiel.getQuantite(), materiel.getCoutUnitaire(), materiel.getCoefficientQualite(), materiel.getCoutTransport());
+        }
+        System.out.printf("**Coût total des matériaux avant TVA : %.2f DH**\n", coutTotalMateriaux);
+        System.out.printf("**Coût total des matériaux avec TVA (20%%) : %.2f DH**\n", coutTotalMateriaux * 1.2);
+        return coutTotalMateriaux;
+    }
+    public double displayMainDoeuvre(Projet projet){
+        System.out.println("2. Main-d'œuvre :");
+        double coutTotalMainOeuvre = 0;
+        for (workforce mainDoeuvre : projet.getWorkforces()) {
+            double coutMainOeuvre = mainDoeuvre.getHeuresTravail() * mainDoeuvre.getTauxHoraire()*mainDoeuvre.getProductiviteOuvrier();
+            coutTotalMainOeuvre += coutMainOeuvre;
+            System.out.printf("- %s : %.2f DH (taux horaire : %.2f DH/h, heures travaillées : %.2f h, productivité : %.2f)\n",
+                    mainDoeuvre.getNom(), coutMainOeuvre, mainDoeuvre.getTauxHoraire(), mainDoeuvre.getHeuresTravail(), mainDoeuvre.getProductiviteOuvrier());
+        }
+        System.out.printf("**Coût total de la main-d'œuvre avant TVA : %.2f DH**\n", coutTotalMainOeuvre);
+        System.out.printf("**Coût total de la main-d'œuvre avec TVA (20%%) : %.2f DH**\n", coutTotalMainOeuvre * 1.2);
+        return coutTotalMainOeuvre;
+    }
+
+    public void displayProject (int projetId){
+
+        Projet projet = projetService.getProject(projetId);
+        if (projet != null) {
+            System.out.println("--- Détails du Projet ---");
+            System.out.println("Nom du projet : " + projet.getNomProjet());
+            if (projet.getClient() != null) {
+                System.out.println("Client : " + projet.getClient().getNom());
+                System.out.println("Adresse du chantier : " + projet.getClient().getAdresse());
+            } else {
+                System.out.println("Client : Non défini");
+            }
+            System.out.println("Surface : " + projet.getSurface() + " m²");
+
+            double coutTotalMateriaux =displayMateriels(projet);
+            double coutTotalMainOeuvre = displayMainDoeuvre(projet);
+
+            double coutTotalAvantMarge = (coutTotalMateriaux + coutTotalMainOeuvre)*1.2;
+            System.out.printf("\n--- Coût total avant marge : %.2f DH  ---\n", coutTotalAvantMarge);
+
+
+            System.out.printf("Marge bénéficiaire (%.2f%%) : %.2f DH \n", (projet.getMargeBeneficiaire() / coutTotalAvantMarge) * 100, projet.getMargeBeneficiaire());
+            System.out.printf("**Coût total final du projet : %.2f DH **\n", projet.getCoutTotal());
+
+        } else {
+            LoggerUtils.logError("Projet non trouvé.");
+        }
+    }
+
     public void displayAllProjects() {
         Map<Integer, Projet> projets = projetService.getAllProjects();
         if (projets.isEmpty()) {
@@ -163,32 +191,4 @@ public class projectConsoleUi {
             System.out.println("\n-----------------------------\n");
         }
     }
-
-    public double displayMateriels(Projet projet){
-        System.out.println("1. Matériaux :");
-        double coutTotalMateriaux = 0;
-        for (Materiel materiel : projet.getMateriels()) {
-            double coutMateriel = (materiel.getQuantite() * materiel.getCoutUnitaire()*materiel.getCoefficientQualite()) + materiel.getCoutTransport();
-            coutTotalMateriaux += coutMateriel;
-            System.out.printf("- %s : %.2f DH (quantité : %.2f, coût unitaire : %.2f DH/unité, qualité : %.2f, transport : %.2f DH)\n",
-                    materiel.getNom(), coutMateriel, materiel.getQuantite(), materiel.getCoutUnitaire(), materiel.getCoefficientQualite(), materiel.getCoutTransport());
-        }
-        System.out.printf("**Coût total des matériaux avant TVA : %.2f DH**\n", coutTotalMateriaux);
-        System.out.printf("**Coût total des matériaux avec TVA (20%%) : %.2f DH**\n", coutTotalMateriaux * 1.2);
-        return coutTotalMateriaux;
-    }
-    public double displayMainDoeuvre(Projet projet){
-        System.out.println("2. Main-d'œuvre :");
-        double coutTotalMainOeuvre = 0;
-        for (workforce mainDoeuvre : projet.getWorkforces()) {
-            double coutMainOeuvre = mainDoeuvre.getHeuresTravail() * mainDoeuvre.getTauxHoraire()*mainDoeuvre.getProductiviteOuvrier();
-            coutTotalMainOeuvre += coutMainOeuvre;
-            System.out.printf("- %s : %.2f DH (taux horaire : %.2f DH/h, heures travaillées : %.2f h, productivité : %.2f)\n",
-                    mainDoeuvre.getNom(), coutMainOeuvre, mainDoeuvre.getTauxHoraire(), mainDoeuvre.getHeuresTravail(), mainDoeuvre.getProductiviteOuvrier());
-        }
-        System.out.printf("**Coût total de la main-d'œuvre avant TVA : %.2f DH**\n", coutTotalMainOeuvre);
-        System.out.printf("**Coût total de la main-d'œuvre avec TVA (20%%) : %.2f DH**\n", coutTotalMainOeuvre * 1.2);
-        return coutTotalMainOeuvre;
-    }
-
 }
