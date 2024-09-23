@@ -16,4 +16,5 @@ public final class LoggerUtils {
     public static void logError(String message){
         logger.error(message);
     }
+
 }

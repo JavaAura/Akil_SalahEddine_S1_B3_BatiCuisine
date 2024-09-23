@@ -80,15 +80,15 @@ public class projectConsoleUi {
 
         Projet projet = projetService.getProject(projetId);
         if (projet != null) {
-            System.out.println("--- Détails du Projet ---");
-            System.out.println("Nom du projet : " + projet.getNomProjet());
+           LoggerUtils.logInfo("--- Détails du Projet ---");
+           LoggerUtils.logInfo("Nom du projet : " + projet.getNomProjet());
             if (projet.getClient() != null) {
-                System.out.println("Client : " + projet.getClient().getNom());
-                System.out.println("Adresse du chantier : " + projet.getClient().getAdresse());
+               LoggerUtils.logInfo("Client : " + projet.getClient().getNom());
+               LoggerUtils.logInfo("Adresse du chantier : " + projet.getClient().getAdresse());
             } else {
-                System.out.println("Client : Non défini");
+               LoggerUtils.logInfo("Client : Non défini");
             }
-            System.out.println("Surface : " + projet.getSurface() + " m²");
+           LoggerUtils.logInfo("Surface : " + projet.getSurface() + " m²");
             double coutTotalMateriaux = displayMateriels(projet);
             double coutTotalMainOeuvre = displayMainDoeuvre(projet);
             double coutTotalAvantMarge = (coutTotalMateriaux + coutTotalMainOeuvre)*1.2;
@@ -140,12 +140,13 @@ public class projectConsoleUi {
             System.out.println("--- Détails du Projet ---");
             System.out.println("Nom du projet : " + projet.getNomProjet());
             if (projet.getClient() != null) {
-                System.out.println("Client : " + projet.getClient().getNom());
-                System.out.println("Adresse du chantier : " + projet.getClient().getAdresse());
+               System.out.println("Client : " + projet.getClient().getNom());
+               System.out.println("Adresse du chantier : " + projet.getClient().getAdresse());
             } else {
-                System.out.println("Client : Non défini");
+               LoggerUtils.logInfo("Client : Non défini");
             }
-            System.out.println("Surface : " + projet.getSurface() + " m²");
+          System.out.println("Surface : " + projet.getSurface() + " m²");
+          System.out.println("Etat de projet : "+projet.getEtatProjet());
 
             double coutTotalMateriaux =displayMateriels(projet);
             double coutTotalMainOeuvre = displayMainDoeuvre(projet);
@@ -179,6 +180,8 @@ public class projectConsoleUi {
                 System.out.println("Client : Non défini");
             }
             System.out.println("Surface : " + projet.getSurface() + " m²");
+            System.out.println("Etat de projet : "+projet.getEtatProjet());
+
             System.out.println("--- Détail des Coûts ---");
             double coutTotalMateriaux =displayMateriels(projet);
             double coutTotalMainOeuvre = displayMainDoeuvre(projet);
@@ -188,7 +191,7 @@ public class projectConsoleUi {
             double pourcentageMarge = (margeBeneficiaire / coutTotalAvantMarge) * 100;
             System.out.printf("4. Marge bénéficiaire (%.2f%%) : %.2f DH\n", pourcentageMarge, margeBeneficiaire);
             System.out.printf("**Coût total final du projet : %.2f DH**\n", projet.getCoutTotal());
-            System.out.println("\n-----------------------------\n");
+            System.out.print("\n-----------------------------\n");
         }
     }
 }

@@ -1,11 +1,10 @@
 package org.aura.view;
 
 import org.aura.models.Devis;
-import org.aura.models.enums.Etat;
 import org.aura.services.implementation.devisImplServ;
 import org.aura.services.implementation.projetImplServ;
+import org.aura.utils.DateUtilis;
 import org.aura.utils.LoggerUtils;
-import org.aura.utils.dateUtilis;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -21,10 +20,31 @@ public class devisConsoleUi {
         LoggerUtils.logInfo("Entrez le montant estimer : ");
         double montantEstimer = scanner.nextDouble();
         scanner.nextLine();
-        LoggerUtils.logInfo("Entrez la date d'émission du devis (format : jj/mm/aaaa) : ");
-        String dateEmission = scanner.nextLine();
-        LoggerUtils.logInfo("Entrez la date de validité du devis (format : jj/mm/aaaa) : ");
-        String dateValidite = scanner.nextLine();
+        LocalDate dateE = null;
+
+        do {
+            LoggerUtils.logInfo("Entrez la date d'émission (format : jj/mm/aaaa) : ");
+            String dateEmission = scanner.nextLine();
+
+            if (DateUtilis.isValidDate(dateEmission)) {
+                dateE = DateUtilis.dateValidation(dateEmission);
+                break;
+            } else {
+                LoggerUtils.logInfo("Date invalide. Veuillez réessayer.");
+            }
+        } while (true);
+
+        LocalDate dateV = null;
+        do {
+            LoggerUtils.logInfo("Entrez la date de validité du devis (format : jj/mm/aaaa) : ");
+            String dateValidite = scanner.nextLine();
+            if (DateUtilis.isValidDate(dateValidite)){
+                dateV = DateUtilis.dateValidation(dateValidite);
+                break;
+            }else {
+                LoggerUtils.logInfo("Date invalide. Veuillez réessayer.");
+            }
+        }while (true);
         LoggerUtils.logInfo("Veuillez acceptez ou réfusez le devis ");
         LoggerUtils.logInfo("1. Accepter ");
         LoggerUtils.logInfo("2. Refuser ");
@@ -41,9 +61,7 @@ public class devisConsoleUi {
         LoggerUtils.logInfo("Souhaitez-vous enregistrer le devis ? (y/n) : ");
         String reponse = scanner.nextLine();
         if (reponse.equalsIgnoreCase("y")) {
-            LocalDate dateEmiss = dateUtilis.dateValidation(dateEmission);
-            LocalDate dateV = dateUtilis.dateValidation(dateValidite);
-            Devis devis = new Devis(montantEstimer,dateEmiss,dateV,accepte);
+            Devis devis = new Devis(montantEstimer,dateE,dateV,accepte);
             devisImplServ.createDevis(devis,projectId);
             LoggerUtils.logInfo("Devis enregistré avec succès !");
         } else {

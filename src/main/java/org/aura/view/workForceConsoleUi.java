@@ -45,8 +45,8 @@ public workForceConsoleUi(){
             double productiviteOuvrier = scanner.nextDouble();
             workforce workforce = new workforce(mainNom,tauxTVA,tauxHoraire,heuresTravail,productiviteOuvrier,laborType);
             workForceImplServ.createWorkForce(workforce, projetId);
-            System.out.println("Main-d'œuvre ajoutée avec succès !");
-            System.out.print("Voulez-vous ajouter un autre type de main-d'œuvre ? (y/n) : ");
+            LoggerUtils.logInfo("Main-d'œuvre ajoutée avec succès !");
+            LoggerUtils.logInfo("Voulez-vous ajouter un autre type de main-d'œuvre ? (y/n) : ");
             ajouterAutreMateriel = scanner.next();
 
         }while (ajouterAutreMateriel.equalsIgnoreCase("y"));
