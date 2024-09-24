@@ -59,5 +59,8 @@ https://github.com/AkilSalah/Akil_SalahEddine_S1_B3_BatiCuisine.git
 ## Diagramme de classe :
 ![DiagrammeDeClasse.png](src/main/resources/batiCuisineClass.png)
 ## Planification JIRA :
+```
+https://akilsalaheddine203.atlassian.net/jira/software/projects/BAT/boards/1?sprintStarted=true&atlOrigin=eyJpIjoiMDgzMTA2MTk0YmQ5NGFhZWFlODg4ZjEyYzNkNDE4YTQiLCJwIjoiaiJ9
+```
 
 
