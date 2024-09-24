@@ -4,8 +4,7 @@ import org.aura.config.DbConnection;
 import org.aura.repository.interfaces.clientRepoInterface;
 import org.aura.models.Client;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class clientRepoImpl implements clientRepoInterface {
 
@@ -14,27 +13,6 @@ public class clientRepoImpl implements clientRepoInterface {
 
     private static Connection getConnection(){
         return DbConnection.getInstance().getConnection();
-    }
-
-    @Override
-    public List<Client> findAllClients() {
-        List<Client> list = new ArrayList<>();
-        String query = " SELECT * FROM client ";
-        try (Connection con = getConnection();
-             PreparedStatement stmt = con.prepareStatement(query)){
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()){
-                Client client = new Client(rs.getInt("id"),
-                        rs.getString("nom"),
-                        rs.getString("adresse"),
-                        rs.getString("telephone"),
-                        rs.getBoolean("estprofessionnel"));
-                list.add(client);
-            }
-        }catch (SQLException e){
-            e.getMessage();
-        }
-        return list;
     }
 
     @Override

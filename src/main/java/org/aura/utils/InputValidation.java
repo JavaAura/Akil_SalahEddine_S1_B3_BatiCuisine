@@ -9,13 +9,14 @@ public class InputValidation {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static String ValidationString() {
-        String input = scanner.next().trim();
-        while (input.isEmpty()) {
-            LoggerUtils.logWarn("Erreur : l'entrée ne doit pas être vide. Veuillez entrer une valeur.");
-            input = scanner.nextLine().trim();
+        String input = scanner.next();
+        while (input == null || input.trim().isEmpty()) {
+            LoggerUtils.logWarn("Erreur : l'entrée ne doit pas être vide ou constituée uniquement d'espaces. Veuillez entrer une valeur valide.");
+            input = scanner.nextLine();
         }
         return input;
     }
+
 
     public static int validationInt() {
         while (true) {
@@ -64,8 +65,10 @@ public class InputValidation {
             String numeroTelephone = scanner.next().trim();
             if (numeroTelephone.matches("^0[67]\\d{8}$")) {
                 return numeroTelephone;
+            }else {
+                LoggerUtils.logWarn("Veuillez entrer un numéro valide commençant par 06 ou 07 et contenant 10 chiffres.");
+
             }
-            LoggerUtils.logWarn("Le numéro de téléphone est invalide. Veuillez entrer un numéro valide commençant par 06 ou 07 et contenant 10 chiffres.");
         }
     }
 

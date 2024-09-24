@@ -126,6 +126,7 @@ public class projectConsoleUi {
         System.out.printf("**Coût total des matériaux avec TVA (20%%) : %.2f DH**\n", coutTotalMateriaux * tva);
         return coutTotalMateriaux * tva;
     }
+
     public double displayMainDoeuvre(Projet projet) {
         System.out.println("2. Main-d'œuvre :");
         double coutTotalMainOeuvre = 0;
@@ -178,9 +179,7 @@ public class projectConsoleUi {
             LoggerUtils.logInfo("Aucun projet trouvé.");
             return;
         }
-        for (Map.Entry<Integer, Projet> entry : projets.entrySet()) {
-            Projet projet = entry.getValue();
-
+        projets.values().stream().forEach(projet -> {
             System.out.println("Nom du projet : " + projet.getNomProjet());
             if (projet.getClient() != null) {
                 System.out.println("Client : " + projet.getClient().getNom());
@@ -201,6 +200,7 @@ public class projectConsoleUi {
             System.out.printf("4. Marge bénéficiaire (%.2f%%) : %.2f DH\n", pourcentageMarge, margeBeneficiaire);
             System.out.printf("**Coût total final du projet : %.2f DH**\n", projet.getCoutTotal());
             System.out.print("\n-----------------------------\n");
-        }
+        });
+
     }
 }

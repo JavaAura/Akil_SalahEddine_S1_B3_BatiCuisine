@@ -75,13 +75,4 @@ public class devisConsoleUi {
         return accepte;
     }
 
-    public  void afficherDevis() {
-        System.out.println("--- Affichage d'un devis ---");
-        System.out.print("Entrez l'ID du devis à afficher : ");
-        int devisId = InputValidation.validationInt();
-
-        Devis devis = devisImplServ.getDevis(devisId);
-        System.out.println("Détails du devis : " +devis );
-    }
-
 }
