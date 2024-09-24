@@ -1,5 +1,6 @@
 package org.aura.view;
 
+import org.aura.utils.InputValidation;
 import org.aura.utils.LoggerUtils;
 
 import java.util.Scanner;
@@ -28,14 +29,15 @@ public class menuConsoleUi {
                     break;
                 case 3 :
                     LoggerUtils.logInfo("Veuillez entre le Id  de projet : ");
-                    int id = scanner.nextInt();
+                    int id = InputValidation.validationInt();
                     projectConsoleUi.displayProject(id);
                     break;
                 case 4 :
                     LoggerUtils.logInfo("AU REVOIR :)");
-
+                    break;
+                default:
+                    LoggerUtils.logWarn("Option invalide");
             }
-
         }while (option!=4);
     }
 }

@@ -4,6 +4,7 @@ import org.aura.models.Devis;
 import org.aura.services.implementation.devisImplServ;
 import org.aura.services.implementation.projetImplServ;
 import org.aura.utils.DateUtilis;
+import org.aura.utils.InputValidation;
 import org.aura.utils.LoggerUtils;
 
 import java.time.LocalDate;
@@ -18,7 +19,7 @@ public class devisConsoleUi {
     public boolean createDevis(Scanner scanner,int projectId){
         LoggerUtils.logInfo("--- Enregistrement du Devis ---");
         LoggerUtils.logInfo("Entrez le montant estimer : ");
-        double montantEstimer = scanner.nextDouble();
+        double montantEstimer = InputValidation.validationDouble();
         scanner.nextLine();
         LocalDate dateE = null;
 
@@ -48,7 +49,7 @@ public class devisConsoleUi {
         LoggerUtils.logInfo("Veuillez acceptez ou réfusez le devis ");
         LoggerUtils.logInfo("1. Accepter ");
         LoggerUtils.logInfo("2. Refuser ");
-        int choix = scanner.nextInt();
+        int choix = InputValidation.validationInt();
         scanner.nextLine();
         boolean accepte = false;
         if (choix == 1){
@@ -59,7 +60,7 @@ public class devisConsoleUi {
             LoggerUtils.logWarn("Option invalide");
         }
         LoggerUtils.logInfo("Souhaitez-vous enregistrer le devis ? (y/n) : ");
-        String reponse = scanner.nextLine();
+        String reponse = InputValidation.validationYesNo();
         if (reponse.equalsIgnoreCase("y")) {
             Devis devis = new Devis(montantEstimer,dateE,dateV,accepte);
             devisImplServ.createDevis(devis,projectId);
@@ -73,7 +74,7 @@ public class devisConsoleUi {
     public  void afficherDevis(Scanner scanner) {
         System.out.println("--- Affichage d'un devis ---");
         System.out.print("Entrez l'ID du devis à afficher : ");
-        int devisId = scanner.nextInt();
+        int devisId = InputValidation.validationInt();
         scanner.nextLine();
         Devis devis = devisImplServ.getDevis(devisId);
         System.out.println("Détails du devis : " +devis );

@@ -6,6 +6,7 @@ import org.aura.models.Projet;
 import org.aura.models.enums.Etat;
 import org.aura.models.workforce;
 import org.aura.services.implementation.projetImplServ;
+import org.aura.utils.InputValidation;
 import org.aura.utils.LoggerUtils;
 
 import static org.aura.utils.LoggerUtils.logInfo;
@@ -33,7 +34,7 @@ public class projectConsoleUi {
         logInfo("1. Chercher un client existant");
         logInfo("2. Ajouter un nouveau client");
         logInfo("Choisissez une option : ");
-        int clientOption = scanner.nextInt();
+        int clientOption = InputValidation.validationInt();
         scanner.nextLine();
         if (clientOption<1 || clientOption>2){
             logInfo("Option invalide");
@@ -47,9 +48,9 @@ public class projectConsoleUi {
 
         logInfo("--- Création d'un Nouveau Projet ---");
         logInfo("Entrez le nom du projet : ");
-        String projectNom = scanner.nextLine();
+        String projectNom = InputValidation.ValidationString();
         logInfo("Entrez la surface de la cuisine (en m²) : ");
-        double surface = scanner.nextDouble();
+        double surface = InputValidation.validationDouble();
         Projet projet = new Projet();
         projet.setNomProjet(projectNom);
         projet.setSurface(surface);
@@ -73,10 +74,10 @@ public class projectConsoleUi {
     public void afficherDetailsProjetEtCalculCout(Scanner scanner, int projetId) {
         LoggerUtils.logInfo("--- Calcul du coût et affichage des détails du projet ---");
         LoggerUtils.logInfo("Souhaitez-vous appliquer une marge bénéficiaire au projet ? (y/n) : ");
-        String appliqueMarge = scanner.next();
+        String appliqueMarge = InputValidation.validationYesNo();
         double margeBeneficiaire = 0.0;
         LoggerUtils.logInfo("Entrez le pourcentage de marge bénéficiaire (%) : ");
-        double pourcentageMarge = scanner.nextDouble();
+        double pourcentageMarge = InputValidation.validationDouble();
 
         Projet projet = projetService.getProject(projetId);
         if (projet != null) {
