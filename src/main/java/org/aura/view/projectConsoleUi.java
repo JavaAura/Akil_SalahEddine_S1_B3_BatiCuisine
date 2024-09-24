@@ -40,6 +40,7 @@ public class projectConsoleUi {
             if (clientOption<1 || clientOption>2){
                 logInfo("Option invalide");
             }
+
         }while (clientOption != 1 && clientOption !=2 );
 
         Client client;
