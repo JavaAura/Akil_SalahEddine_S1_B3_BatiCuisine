@@ -36,7 +36,6 @@ public class materialConsoleUi {
             LoggerUtils.logInfo("Voulez-vous ajouter un autre matériau ? (y/n) : ");
             ajouterAutreMateriel = InputValidation.validationYesNo();
 
-
         }while (ajouterAutreMateriel.equalsIgnoreCase("y"));
     }
 

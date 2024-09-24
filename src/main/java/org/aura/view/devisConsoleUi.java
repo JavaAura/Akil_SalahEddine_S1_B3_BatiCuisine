@@ -2,16 +2,13 @@ package org.aura.view;
 
 import org.aura.models.Devis;
 import org.aura.services.implementation.devisImplServ;
-import org.aura.services.implementation.projetImplServ;
 import org.aura.utils.DateUtilis;
 import org.aura.utils.InputValidation;
 import org.aura.utils.LoggerUtils;
-
 import java.time.LocalDate;
 
 public class devisConsoleUi {
     private devisImplServ devisImplServ;
-    private projetImplServ projetImplServ;
     public devisConsoleUi() {
         this.devisImplServ = new devisImplServ();
     }
@@ -19,7 +16,6 @@ public class devisConsoleUi {
         LoggerUtils.logInfo("--- Enregistrement du Devis ---");
         LoggerUtils.logInfo("Entrez le montant estimer : ");
         double montantEstimer = InputValidation.validationDouble();
-
         LocalDate dateE = null;
 
         do {
@@ -38,13 +34,17 @@ public class devisConsoleUi {
         do {
             LoggerUtils.logInfo("Entrez la date de validité du devis (format : jj/mm/aaaa) : ");
             String dateValidite = InputValidation.ValidationString();
-            if (DateUtilis.isValidDate(dateValidite)){
+            if (DateUtilis.isValidDate(dateValidite)) {
                 dateV = DateUtilis.dateValidation(dateValidite);
-                break;
-            }else {
+                if (dateV.isAfter(dateE)) {
+                    break;
+                } else {
+                    LoggerUtils.logWarn("La date de validité ne peut pas être antérieure à la date d'émission. Veuillez réessayer.");
+                }
+            } else {
                 LoggerUtils.logInfo("Date invalide. Veuillez réessayer.");
             }
-        }while (true);
+        } while (true);
         LoggerUtils.logInfo("Veuillez acceptez ou réfusez le devis ");
         LoggerUtils.logInfo("1. Accepter ");
         LoggerUtils.logInfo("2. Refuser ");
