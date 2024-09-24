@@ -60,14 +60,14 @@ public class InputValidation {
     }
 
     public static String validationPhoneNumber() {
+        while (true) {
             String numeroTelephone = scanner.next().trim();
-            if (numeroTelephone.length() < 10 && !numeroTelephone.matches("^0[67]\\d{8}$") ) {
-                LoggerUtils.logWarn("Le numéro de téléphone est invalide. Veuillez entrer un numéro valide d'au moins 10 caractères.");
-                return validationPhoneNumber();
+            if (numeroTelephone.matches("^0[67]\\d{8}$")) {
+                return numeroTelephone;
             }
-            return numeroTelephone;
+            LoggerUtils.logWarn("Le numéro de téléphone est invalide. Veuillez entrer un numéro valide commençant par 06 ou 07 et contenant 10 chiffres.");
+        }
     }
-
 
     public static String validationYesNo() {
         String input;
