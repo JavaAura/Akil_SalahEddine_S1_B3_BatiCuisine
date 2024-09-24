@@ -27,6 +27,7 @@ public class materielRepoImpl implements materielRepoInterface {
             if (rs.next()){
                 Materiel materiel = new Materiel(
                         rs.getString("nom"),
+                        rs.getDouble("tauxTVA"),
                         rs.getDouble("coutUnitaire"),
                         rs.getDouble("quantite"),
                         rs.getDouble("coutTransport"),

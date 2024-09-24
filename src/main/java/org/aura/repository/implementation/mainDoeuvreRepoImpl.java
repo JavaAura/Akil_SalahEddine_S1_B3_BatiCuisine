@@ -30,6 +30,7 @@ public class mainDoeuvreRepoImpl implements mainDoeuvreRepoInterface {
                 }
                 workforce workforce = new workforce(
                         rs.getString("nom"),
+                        rs.getDouble("tauxTVA"),
                         rs.getDouble("tauxHoraire"),
                         rs.getDouble("heuresTravail"),
                         rs.getDouble("productiviteOuvrier"),

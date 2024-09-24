@@ -18,7 +18,6 @@ public class materialConsoleUi {
         LoggerUtils.logInfo("--- Ajout des matériaux ---");
         String ajouterAutreMateriel ;
         do {
-
             LoggerUtils.logInfo("Entrez le nom du matériau : ");
             String materialNom = InputValidation.ValidationString();
             LoggerUtils.logInfo("Entrez la quantité de ce matériau : ");
@@ -40,4 +39,5 @@ public class materialConsoleUi {
 
         }while (ajouterAutreMateriel.equalsIgnoreCase("y"));
     }
+
 }

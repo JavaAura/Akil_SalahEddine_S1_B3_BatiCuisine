@@ -72,6 +72,7 @@ public class projectRepoImpl implements projectRepoInterface {
                     while (rs.next()) {
                         Materiel materiel = new Materiel(
                                 rs.getString("nom"),
+                                rs.getDouble("tauxtva"),
                                 rs.getDouble("coutunitaire"),
                                 rs.getDouble("quantite"),
                                 rs.getDouble("couttransport"),
@@ -96,6 +97,7 @@ public class projectRepoImpl implements projectRepoInterface {
                     while (rs.next()) {
                         workforce mainDoeuvre = new workforce(
                                 rs.getString("nom"),
+                                rs.getDouble("tauxtva"),
                                 rs.getDouble("tauxhoraire"),
                                 rs.getDouble("heurestravail"),
                                 rs.getDouble("productivite"),
@@ -158,6 +160,7 @@ public class projectRepoImpl implements projectRepoInterface {
                 while (rs.next()) {
                     Materiel materiel = new Materiel(
                             rs.getString("nom"),
+                            rs.getDouble("tauxtva"),
                             rs.getDouble("coutunitaire"),
                             rs.getDouble("quantite"),
                             rs.getDouble("couttransport"),
@@ -178,6 +181,7 @@ public class projectRepoImpl implements projectRepoInterface {
                 while (rs.next()) {
                     workforce mainDoeuvre = new workforce(
                             rs.getString("nom"),
+                            rs.getDouble("tauxtva"),
                             rs.getDouble("tauxhoraire"),
                             rs.getDouble("heurestravail"),
                             rs.getDouble("productivite"),
