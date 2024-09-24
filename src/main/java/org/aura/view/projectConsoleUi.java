@@ -34,11 +34,14 @@ public class projectConsoleUi {
         logInfo("1. Chercher un client existant");
         logInfo("2. Ajouter un nouveau client");
         logInfo("Choisissez une option : ");
-        int clientOption = InputValidation.validationInt();
+        int clientOption;
+        do {
+            clientOption = InputValidation.validationInt();
+            if (clientOption<1 || clientOption>2){
+                logInfo("Option invalide");
+            }
+        }while (clientOption != 1 && clientOption !=2 );
 
-        if (clientOption<1 || clientOption>2){
-            logInfo("Option invalide");
-        }
         Client client;
         if (clientOption == 1) {
             client = clientConsoleUi.rechercheClientExist();
@@ -81,15 +84,15 @@ public class projectConsoleUi {
 
         Projet projet = projetService.getProject(projetId);
         if (projet != null) {
-           LoggerUtils.logInfo("--- Détails du Projet ---");
-           LoggerUtils.logInfo("Nom du projet : " + projet.getNomProjet());
+            System.out.println("--- Détails du Projet ---");
+            System.out.println("Nom du projet : " + projet.getNomProjet());
             if (projet.getClient() != null) {
-               LoggerUtils.logInfo("Client : " + projet.getClient().getNom());
-               LoggerUtils.logInfo("Adresse du chantier : " + projet.getClient().getAdresse());
+                System.out.println("Client : " + projet.getClient().getNom());
+                System.out.println("Adresse du chantier : " + projet.getClient().getAdresse());
             } else {
-               LoggerUtils.logInfo("Client : Non défini");
+               LoggerUtils.logWarn("Client : Non défini");
             }
-           LoggerUtils.logInfo("Surface : " + projet.getSurface() + " m²");
+            System.out.println("Surface : " + projet.getSurface() + " m²");
             double coutTotalMateriaux = displayMateriels(projet);
             double coutTotalMainOeuvre = displayMainDoeuvre(projet);
             double coutTotalAvantMarge = (coutTotalMateriaux + coutTotalMainOeuvre)*1.2;
