@@ -8,7 +8,6 @@ import org.aura.utils.InputValidation;
 import org.aura.utils.LoggerUtils;
 
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public class devisConsoleUi {
     private devisImplServ devisImplServ;
@@ -16,16 +15,16 @@ public class devisConsoleUi {
     public devisConsoleUi() {
         this.devisImplServ = new devisImplServ();
     }
-    public boolean createDevis(Scanner scanner,int projectId){
+    public boolean createDevis(int projectId){
         LoggerUtils.logInfo("--- Enregistrement du Devis ---");
         LoggerUtils.logInfo("Entrez le montant estimer : ");
         double montantEstimer = InputValidation.validationDouble();
-        scanner.nextLine();
+
         LocalDate dateE = null;
 
         do {
             LoggerUtils.logInfo("Entrez la date d'émission (format : jj/mm/aaaa) : ");
-            String dateEmission = scanner.nextLine();
+            String dateEmission = InputValidation.ValidationString();
 
             if (DateUtilis.isValidDate(dateEmission)) {
                 dateE = DateUtilis.dateValidation(dateEmission);
@@ -38,7 +37,7 @@ public class devisConsoleUi {
         LocalDate dateV = null;
         do {
             LoggerUtils.logInfo("Entrez la date de validité du devis (format : jj/mm/aaaa) : ");
-            String dateValidite = scanner.nextLine();
+            String dateValidite = InputValidation.ValidationString();
             if (DateUtilis.isValidDate(dateValidite)){
                 dateV = DateUtilis.dateValidation(dateValidite);
                 break;
@@ -49,16 +48,21 @@ public class devisConsoleUi {
         LoggerUtils.logInfo("Veuillez acceptez ou réfusez le devis ");
         LoggerUtils.logInfo("1. Accepter ");
         LoggerUtils.logInfo("2. Refuser ");
-        int choix = InputValidation.validationInt();
-        scanner.nextLine();
         boolean accepte = false;
-        if (choix == 1){
-            accepte = true;
-        }else if (choix==2){
-            accepte = false;
-        }else {
-            LoggerUtils.logWarn("Option invalide");
-        }
+        int choix;
+        do {
+             choix = InputValidation.validationInt();
+            if (choix == 1){
+                accepte = true;
+                LoggerUtils.logInfo("Devis accepté.");
+            }else if (choix==2){
+                accepte = false;
+                LoggerUtils.logInfo("Devis refusé.");
+            }else {
+                LoggerUtils.logWarn("Option invalide");
+            }
+        }while (choix!=1 && choix!=2);
+
         LoggerUtils.logInfo("Souhaitez-vous enregistrer le devis ? (y/n) : ");
         String reponse = InputValidation.validationYesNo();
         if (reponse.equalsIgnoreCase("y")) {
@@ -71,11 +75,11 @@ public class devisConsoleUi {
         return accepte;
     }
 
-    public  void afficherDevis(Scanner scanner) {
+    public  void afficherDevis() {
         System.out.println("--- Affichage d'un devis ---");
         System.out.print("Entrez l'ID du devis à afficher : ");
         int devisId = InputValidation.validationInt();
-        scanner.nextLine();
+
         Devis devis = devisImplServ.getDevis(devisId);
         System.out.println("Détails du devis : " +devis );
     }

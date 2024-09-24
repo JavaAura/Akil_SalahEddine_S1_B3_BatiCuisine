@@ -5,7 +5,6 @@ import org.aura.services.implementation.materielImpServ;
 import org.aura.utils.InputValidation;
 import org.aura.utils.LoggerUtils;
 
-import java.util.Scanner;
 
 public class materialConsoleUi {
 
@@ -15,11 +14,11 @@ public class materialConsoleUi {
         this.materielImpServ = new materielImpServ();
     }
 
-    public void ajouterMateriel(Scanner scanner, int projetId){
+    public void ajouterMateriel( int projetId){
         LoggerUtils.logInfo("--- Ajout des matériaux ---");
         String ajouterAutreMateriel ;
         do {
-            scanner.nextLine();
+
             LoggerUtils.logInfo("Entrez le nom du matériau : ");
             String materialNom = InputValidation.ValidationString();
             LoggerUtils.logInfo("Entrez la quantité de ce matériau : ");

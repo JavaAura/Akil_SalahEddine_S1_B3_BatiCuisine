@@ -8,7 +8,7 @@ import org.aura.utils.LoggerUtils;
 import static org.aura.utils.LoggerUtils.logInfo;
 import static org.aura.utils.LoggerUtils.logWarn;
 
-import java.util.Scanner;
+
 
 public class clientConsoleUi {
 
@@ -18,13 +18,14 @@ public class clientConsoleUi {
         this.clientImplService = new clientImplServ();
     }
 
-    public Client rechercheClientExist(Scanner scanner) {
+    public Client rechercheClientExist() {
         Client client = null;
         boolean trouve = false;
         String accepte = "n";
         do {
             logInfo("--- Recherche de client existant ---");
             logInfo("Entrez le nom du client : ");
+
             String clientNom = InputValidation.ValidationName();
             client = clientImplService.getClientByName(clientNom);
             if (client != null) {
@@ -42,7 +43,7 @@ public class clientConsoleUi {
     }
 
 
-    public Client ajouterClient(Scanner scanner){
+    public Client ajouterClient(){
         String accepte = "n";
         Client createdClient = null;
         do {
@@ -57,15 +58,20 @@ public class clientConsoleUi {
             logInfo("1. Professionnel");
             logInfo("2. régulier");
             logInfo("Tapez un 1 pour un client Professionnel ou 2 pour un client régulier");
-            int choix = InputValidation.validationInt();
-            scanner.nextLine();
-            if (choix<1 || choix>2){
-                logWarn("Option invalide");
-            }
+            int choix ;
             boolean estProfessionnel = false ;
-            if (choix == 1){
-                estProfessionnel = true;
-            }
+            do {
+                choix = InputValidation.validationInt();
+                if (choix == 1){
+                    estProfessionnel = true;
+                    LoggerUtils.logInfo("Client est Professionnel");
+                } else if (choix == 2) {
+                    LoggerUtils.logInfo("Client est régulier");
+                }else {
+                    LoggerUtils.logInfo("Option invalide");
+                }
+            }while (choix!=1 && choix!=2);
+
             Client client = new Client(clientNom,address,phoneNumber,estProfessionnel);
              createdClient = clientImplService.createClient(client);
             if (createdClient != null) {
@@ -79,10 +85,6 @@ public class clientConsoleUi {
         return createdClient;
     }
 
-    public static void main(String[] args) {
-        clientConsoleUi clientConsoleUi = new clientConsoleUi();
-        Scanner scanner = new Scanner(System.in);
-        clientConsoleUi.rechercheClientExist(scanner);
-    }
+
 }
 

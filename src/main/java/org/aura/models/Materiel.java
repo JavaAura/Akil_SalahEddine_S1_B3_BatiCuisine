@@ -49,9 +49,9 @@ public class Materiel extends Composants {
     @Override
     public String toString() {
         return "Materiel{" +
-                " id=" + id +
-                ", nom='" + nom + '\'' +
-                ", tauxTVA=" + tauxTVA +
+                " id=" + super.getId() +
+                ", nom='" + super.getNom() +
+                ", tauxTVA=" + super.getTauxTVA() +
                 ", coutUnitaire=" + coutUnitaire +
                 ", quantite=" + quantite +
                 ", coutTransport=" + coutTransport +

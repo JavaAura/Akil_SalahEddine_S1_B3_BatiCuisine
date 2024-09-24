@@ -9,9 +9,9 @@ public class InputValidation {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static String ValidationString() {
-        String input = scanner.nextLine().trim();
+        String input = scanner.next().trim();
         while (input.isEmpty()) {
-            System.out.println("Erreur : l'entrée ne doit pas être vide. Veuillez entrer une valeur.");
+            LoggerUtils.logWarn("Erreur : l'entrée ne doit pas être vide. Veuillez entrer une valeur.");
             input = scanner.nextLine().trim();
         }
         return input;
@@ -22,12 +22,11 @@ public class InputValidation {
             try {
                 int value = scanner.nextInt();
                 if (value <= 0) {
-                    System.out.println("Veuillez entrer un nombre entier supérieur à zéro.");
-                    continue;
+                    LoggerUtils.logWarn("Veuillez entrer un nombre entier supérieur à zéro.");
                 }
-                return value;
+                return  value;
             } catch (InputMismatchException e) {
-                System.out.println("Veuillez entrer un nombre entier valide.");
+                LoggerUtils.logWarn("Veuillez entrer un nombre entier valide.");
                 scanner.next();
             }
         }
@@ -41,7 +40,7 @@ public class InputValidation {
                 scanner.nextLine();
                 return value;
             } else {
-                System.out.println("Erreur : veuillez entrer un nombre valide.");
+                LoggerUtils.logWarn("Erreur : veuillez entrer un nombre valide.");
                 scanner.next();
             }
         }
@@ -52,37 +51,32 @@ public class InputValidation {
     }
 
     public static String ValidationName() {
-        String input = scanner.nextLine().trim();
-        while (!isValidName(input)) {
-            System.out.println("Erreur : le nom ne doit contenir que des lettres. Veuillez réessayer.");
-            input = scanner.nextLine().trim();
+        String input = scanner.next();
+        if (!isValidName(input)) {
+            LoggerUtils.logWarn("Erreur : le nom ne doit contenir que des lettres. Veuillez réessayer.");
+          return ValidationName();
         }
         return input;
     }
 
     public static String validationPhoneNumber() {
-        while (true) {
-            String numeroTelephone = scanner.nextLine().trim();
-            if (numeroTelephone.length() < 10) {
-                System.out.println("Le numéro de téléphone doit contenir au moins 10 caractères.");
-                continue;
-            }
-            if (!numeroTelephone.matches("^0[67]\\d{8}$")) {
-                System.out.println("Le numéro de téléphone est invalide. Veuillez entrer un numéro valide.");
-                continue;
+            String numeroTelephone = scanner.next().trim();
+            if (numeroTelephone.length() < 10 && !numeroTelephone.matches("^0[67]\\d{8}$") ) {
+                LoggerUtils.logWarn("Le numéro de téléphone est invalide. Veuillez entrer un numéro valide d'au moins 10 caractères.");
+                return validationPhoneNumber();
             }
             return numeroTelephone;
-        }
     }
+
 
     public static String validationYesNo() {
         String input;
         while (true) {
-            input = scanner.nextLine().trim().toLowerCase();
+            input = scanner.next().trim().toLowerCase();
             if (input.equals("y") || input.equals("n") ) {
                 return input;
             } else {
-                System.out.println("Erreur : veuillez entrer 'y', 'n'.");
+                LoggerUtils.logWarn("Erreur : veuillez entrer 'y', 'n'.");
             }
         }
     }

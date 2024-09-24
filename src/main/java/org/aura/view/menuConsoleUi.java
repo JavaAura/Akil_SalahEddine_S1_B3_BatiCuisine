@@ -3,14 +3,14 @@ package org.aura.view;
 import org.aura.utils.InputValidation;
 import org.aura.utils.LoggerUtils;
 
-import java.util.Scanner;
+
 
 public class menuConsoleUi {
 
     public static void main(String[] args) {
         projectConsoleUi projectConsoleUi = new projectConsoleUi();
 
-        Scanner scanner = new Scanner(System.in);
+
         int option;
         do {
             LoggerUtils.logInfo("=== Menu Principal ===");
@@ -19,10 +19,10 @@ public class menuConsoleUi {
             LoggerUtils.logInfo("3. Calculer le coût d'un projet");
             LoggerUtils.logInfo("4. Quitter");
             LoggerUtils.logInfo("Choisissez une option : ");
-            option = scanner.nextInt();
+            option = InputValidation.validationInt();
             switch (option){
                 case 1 :
-                    projectConsoleUi.creeProjet(scanner);
+                    projectConsoleUi.creeProjet();
                     break;
                 case 2 :
                     projectConsoleUi.displayAllProjects();

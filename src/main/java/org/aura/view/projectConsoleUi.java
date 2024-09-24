@@ -12,7 +12,7 @@ import org.aura.utils.LoggerUtils;
 import static org.aura.utils.LoggerUtils.logInfo;
 
 import java.util.Map;
-import java.util.Scanner;
+
 
 public class projectConsoleUi {
 
@@ -29,21 +29,21 @@ public class projectConsoleUi {
         this.devisConsoleUi = new devisConsoleUi();
     }
 
-    public void creeProjet(Scanner scanner){
+    public void creeProjet(){
         logInfo("--- Recherche de client ---");
         logInfo("1. Chercher un client existant");
         logInfo("2. Ajouter un nouveau client");
         logInfo("Choisissez une option : ");
         int clientOption = InputValidation.validationInt();
-        scanner.nextLine();
+
         if (clientOption<1 || clientOption>2){
             logInfo("Option invalide");
         }
         Client client;
         if (clientOption == 1) {
-            client = clientConsoleUi.rechercheClientExist(scanner);
+            client = clientConsoleUi.rechercheClientExist();
         } else {
-            client = clientConsoleUi.ajouterClient(scanner);
+            client = clientConsoleUi.ajouterClient();
         }
 
         logInfo("--- Création d'un Nouveau Projet ---");
@@ -60,10 +60,10 @@ public class projectConsoleUi {
             logInfo("Erreur lors de la création du projet.");
             return;
         }
-         materialConsoleUi.ajouterMateriel(scanner, projetId);
-         workForceConsoleUi.ajouterMainOeuvre(scanner, projetId);
-         afficherDetailsProjetEtCalculCout(scanner,projetId);
-       boolean accepte = devisConsoleUi.createDevis(scanner,projetId);
+         materialConsoleUi.ajouterMateriel(projetId);
+         workForceConsoleUi.ajouterMainOeuvre(projetId);
+         afficherDetailsProjetEtCalculCout(projetId);
+       boolean accepte = devisConsoleUi.createDevis(projetId);
        if (accepte){
            projetService.updateEtatProject(projetId,Etat.Terminé);
        }else {
@@ -71,7 +71,7 @@ public class projectConsoleUi {
        }
     }
 
-    public void afficherDetailsProjetEtCalculCout(Scanner scanner, int projetId) {
+    public void afficherDetailsProjetEtCalculCout( int projetId) {
         LoggerUtils.logInfo("--- Calcul du coût et affichage des détails du projet ---");
         LoggerUtils.logInfo("Souhaitez-vous appliquer une marge bénéficiaire au projet ? (y/n) : ");
         String appliqueMarge = InputValidation.validationYesNo();

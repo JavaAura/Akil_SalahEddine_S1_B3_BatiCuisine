@@ -6,7 +6,6 @@ import org.aura.services.implementation.workForceImplServ;
 import org.aura.utils.InputValidation;
 import org.aura.utils.LoggerUtils;
 
-import java.util.Scanner;
 
 public class workForceConsoleUi {
 
@@ -16,11 +15,11 @@ public workForceConsoleUi(){
     this.workForceImplServ = new workForceImplServ();
 }
 
-    public void ajouterMainOeuvre(Scanner scanner, int projetId){
+    public void ajouterMainOeuvre( int projetId){
         LoggerUtils.logInfo("--- Ajout des matériaux ---");
         String ajouterAutreMateriel ;
         do {
-            scanner.nextLine();
+
             LoggerUtils.logInfo("Entrez le nom du main-d'œuvre : ");
             String mainNom = InputValidation.ValidationString();
             LoggerUtils.logInfo("Entrez le taux TVA : ");
