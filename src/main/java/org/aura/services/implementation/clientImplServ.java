@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.aura.utils.LoggerUtils.logInfo;
-import static org.aura.utils.LoggerUtils.logWarn;
 
 
 public class clientImplServ implements clientInterfaceServ {
@@ -51,4 +50,5 @@ public class clientImplServ implements clientInterfaceServ {
         }
         return null;
     }
+
 }

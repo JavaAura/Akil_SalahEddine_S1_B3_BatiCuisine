@@ -11,7 +11,7 @@ public class InputValidation {
     public static String ValidationString() {
         String input = scanner.next();
         while (input == null || input.trim().isEmpty()) {
-            LoggerUtils.logWarn("Erreur : l'entrée ne doit pas être vide ou constituée uniquement d'espaces. Veuillez entrer une valeur valide.");
+            LoggerUtils.logWarn("L'entrée ne doit pas être vide . Veuillez entrer une valeur valide.");
             input = scanner.nextLine();
         }
         return input;

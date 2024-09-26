@@ -4,7 +4,7 @@ import org.aura.config.DbConnection;
 import org.aura.repository.interfaces.clientRepoInterface;
 import org.aura.models.Client;
 import java.sql.*;
-
+import java.util.ArrayList;
 
 public class clientRepoImpl implements clientRepoInterface {
 
@@ -74,4 +74,5 @@ public class clientRepoImpl implements clientRepoInterface {
         }
         return -1;
     }
+
 }

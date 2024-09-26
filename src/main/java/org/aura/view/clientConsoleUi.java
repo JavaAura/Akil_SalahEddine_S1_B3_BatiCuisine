@@ -4,7 +4,6 @@ import org.aura.models.Client;
 import org.aura.services.implementation.clientImplServ;
 import org.aura.utils.InputValidation;
 import org.aura.utils.LoggerUtils;
-
 import static org.aura.utils.LoggerUtils.logInfo;
 import static org.aura.utils.LoggerUtils.logWarn;
 
@@ -12,12 +11,11 @@ import static org.aura.utils.LoggerUtils.logWarn;
 
 public class clientConsoleUi {
 
-    private final clientImplServ clientImplService;
+    private  final clientImplServ clientImplService;
 
     public clientConsoleUi() {
         this.clientImplService = new clientImplServ();
     }
-
     public Client rechercheClientExist() {
         Client client = null;
         boolean trouve = false;
@@ -41,7 +39,6 @@ public class clientConsoleUi {
 
         return client;
     }
-
 
     public Client ajouterClient(){
         String accepte = "n";
@@ -84,6 +81,8 @@ public class clientConsoleUi {
         }while (accepte.equalsIgnoreCase("n"));
         return createdClient;
     }
+
+
 
 
 }
